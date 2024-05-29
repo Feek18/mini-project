@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Detail Page</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        * {
+            box-sizing: border-box
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #151515;
+            overflow-x: hidden;
+        }
+
+        .wrapper {
+            width: 100%;
+            min-height: calc(100vh - 60px);
+            display: flex;
+            gap: 24px;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 17px;
+            margin-top: 2px;
+        }
+
+        .follow-head {
+            flex: 1;
+        }
+
+        .follow {
+            overflow: hidden;
+            position: sticky;
+            top: 100px;
+        }
+
+        .follow-body {
+            display: flex;
+            flex-direction: column;
+            width: 400px;
+            border-radius: 8px;
+            margin-top: 20px;
+            flex-grow: 1;
+        }
+
+        .content {
+            display: flex;
+            flex: 1;
+            padding: 32px;
+            gap: 100px
+        }
+
+        .main-content {
+            flex: 2;
+        }
+
+        header {
+            background-color: #151515;
+            position: sticky;
+            top: 0;
+            z-index: 5;
+            width: 100%;
+            padding: 10px 0;
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 25px;
+            z-index: 5;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 150px;
+        }
+
+        .input-group-custom {
+            max-width: 380px; /* Atur sesuai kebutuhan */
+        }
+        .border-bottom {
+            border: none; /* Menghilangkan semua border */
+            border-bottom: 1px solid #ccc; /* Menambahkan border bawah */
+            border-radius: 0; /* Menghilangkan border-radius */
+            width: 100%; /* Membuat inputan memenuhi lebar parent */
+        }
+        .border-bottom:focus {
+            box-shadow: none; /* Menghilangkan shadow saat fokus */
+            border-bottom: 1px solid #007bff; /* Warna border saat fokus */
+        }
+        .input-grup {
+            display: flex; /* Flexbox untuk elemen dalam div ini */
+            align-items: center; /* Vertikal rata tengah */
+        }
+    </style>
+</head>
+
+<body>
+
+    <section>
+        <div class="wrapper">
+
+            {{-- sidebar --}}
+            @include('layouts.sidebar')
+
+            <div class="mt-5">
+                {{-- back --}}
+                <div class="d-flex align-items-center">
+                    <a class="text-decoration-none text-white" href="{{ route('index') }}"><i class="fa-solid fa-chevron-left me-3"></i>back</a>
+                </div>
+                {{-- detail body --}}
+                <div class="card mt-4 p-4" style="width: 1190px; background-color: transparent; border: 1px solid #FFFF">
+                    <div class="d-flex align-items-center gap-2 text-white">
+                        <img style="border-radius: 100px"
+                        src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?q=80&w=1985&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        width="50px" height="50px" alt="">
+                        <h3>reezyx</h3>
+                    </div>
+                    <div class="d-flex align-items-start mt-3 text-white">
+                        <div class="col-md-8">
+                            <h6 class="title flex-start">You should go here bro✨</h6>
+                            <img src="https://images.unsplash.com/photo-1506112573664-1a1b66d93ff3?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" width="95%"
+                            alt="">
+                        </div>
+                        <div class="col-md-6">
+                            <h4>komentar</h4>
+                            <hr style="width: 65%">
+                            <div class="d-flex align-items-center">
+                                <div class="d-flex">
+                                    <i class="fa-regular fa-heart me-3"></i>
+                                    <i class="fa-regular fa-comment me-3"></i>
+                                    <i class="fa-regular fa-paper-plane me-5"></i>
+                                </div>
+                                <i class="fa-regular fa-bookmark"></i>
+                            </div>
+                            <div class="mt-4">
+                                <form class="input-group-custom" action="">
+                                    <div class="input-grup">
+                                        <input type="text" class="form-control me-2" placeholder="Tulis komentar anda">
+                                        <button class="btn text-white" type="submit">Kirim</button>
+                                    </div>
+                                </form>
+                            </div>                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div>
+            {{-- footer --}}
+            @include('layouts.footer')
+        </div>
+    </section>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
+</body>
+
+</html>
