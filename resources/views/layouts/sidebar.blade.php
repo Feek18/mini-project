@@ -37,9 +37,12 @@
                         </a>
                     </li>
                     <li class="nav-item mb-3">
-                        <a class="text-decoration-none text-white" href="" class="nav-link">
-                            <i class="fa-solid fa-arrow-right-from-bracket me-3"></i>Logout
-                        </a>
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <a class="text-decoration-none text-white" href="{{ route('logout') }}" class="nav-link">
+                                <i class="fa-solid fa-arrow-right-from-bracket me-3"></i>Logout
+                            </a>
+                        </form>
                     </li>
                     @else
                     <li class="nav-item mb-3">

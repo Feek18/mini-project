@@ -62,4 +62,10 @@ class daftarController extends Controller
                 ->with('error', 'Login failed email or password is incorrect');
         }
     }
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        return redirect()->route('login');
+    }
 }

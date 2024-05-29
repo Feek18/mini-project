@@ -28,6 +28,7 @@ Route::post('/register', [daftarController::class, 'doneRegister'])->name('regis
 // login
 Route::get('/login', [daftarController::class, 'login'])->name('login');
 Route::post('/login-user', [daftarController::class, 'doneLogin'])->name('login_user');
+Route::get('/logout', [daftarController::class, 'logout'])->name('logout');
 
 // detail gambar
 Route::get('/detail', [detailController::class, 'detailGambar'])->name('detail');
