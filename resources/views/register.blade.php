@@ -8,6 +8,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <style>
         * {
             box-sizing: border-box
@@ -46,7 +48,7 @@
                     <div>
                         <form action="{{ route('register_user') }}" method="POST">
                             @csrf
-                            <div class="form-group mb-2">
+                            <div class="form-group mb-3">
                                 <div class="d-flex gap-3">
                                     <div style="flex: 1;">
                                         <label class="text-white mb-1" for="username">Username</label>
@@ -68,7 +70,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group mb-2">
+                            <div class="form-group mb-3">
                                 <label class="text-white mb-1" for="email">Email Address</label>
                                 <input type="email" name="email" id="email"
                                     class="form-control @error('email') is-invalid @enderror"
@@ -77,10 +79,10 @@
                                     <div class="text-danger mt-2">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="form-group mb-2">
-                                <div class="form-text">
+                            <div class="form-group mb-3">
+                                <div class="form-text d-flex justify-content-between">
                                     <label for="password" class="text-white">Password</label>
-                                    <i class="fa-solid fa-eye-slash text-dark" id="toggle-password"
+                                    <i class="fa-solid fa-eye-slash text-white" id="toggle-password"
                                         style="cursor: pointer;"></i>
                                 </div>
                                 <input type="password" class="form-control " id="password" name="password"
@@ -90,9 +92,9 @@
                                 @enderror
                             </div>
                             <div class="form-group mb-4">
-                                <div class="form-text">
+                                <div class="form-text d-flex justify-content-between">
                                     <label for="password_confirmation" class="text-white">Konfirmasi Password</label>
-                                    <i class="fa fa-eye-slash text-dark" id="toggle-confirm-password"
+                                    <i class="fa fa-eye-slash text-white" id="toggle-confirm-password"
                                         style="cursor: pointer;"></i>
                                 </div>
                                 <input type="password" class="form-control " id="password_confirmation"

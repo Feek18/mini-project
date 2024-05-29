@@ -30,7 +30,7 @@
         .wrapper {
             width: 500px;
             display: flex;
-            gap: 240px;
+            gap: 100px;
         }
 
         .sidebar {
@@ -54,6 +54,13 @@
             max-width: 400px;
         }
 
+        .post {
+            margin-top: 32px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px
+        }
+
         footer {
             width: 100%;
             padding: 20px 0;
@@ -75,7 +82,11 @@
                             width="150px" height="150px" alt="">
                         <div class="profile-container text-white">
                             <div class="header">
-                                <h3>reezyx</h3>
+                                @if (Auth::user())
+                                    <h3>{{ Auth::user()->username }}</h3>
+                                @else
+                                <p>gagal memuat</p>
+                                @endif
                                 <button type="button" class="btn text-white" data-bs-toggle="modal"
                                     data-bs-target="#exampleModal">
                                     <i class="fa-solid fa-gear"></i>
@@ -113,6 +124,18 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                {{-- konten postingan --}}
+                <div class="post">
+                    @foreach ($product as $data)
+                    <div class="card" style="width: 330px;">
+                        @if ($data->gambar)
+                        <img src="{{ Storage::url($data->gambar) }}" alt="">    
+                        @else
+                        <span>tidak ada gambar</span>
+                        @endif
+                    </div>
+                    @endforeach
                 </div>
                 <footer style="margin-top: 1000px; width: 100%; text-align: center;">
                     {{-- footer --}}

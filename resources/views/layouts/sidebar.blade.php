@@ -28,7 +28,7 @@
                         </a>
                     </li>
                     <li class="nav-item mb-3">
-                        <a class="text-decoration-none text-white" href="" class="nav-link">
+                        <a class="text-decoration-none text-white" href="{{ route('posting') }}" class="nav-link">
                             <i class="fa-solid fa-plus me-3"></i>Postingan
                         </a>
                     </li>
