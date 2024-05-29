@@ -130,7 +130,7 @@
                                 <input class="custom-input form-control @error('deskripsi') is-invalid @enderror" type="text" placeholder="Deskripsi postingan" id="deskripsi" name="deskripsi" value="{{ old('deskripsi') }}">
                                 <div class="input-custom mt-2">
                                     <span>Pilih Gambar</span>
-                                    <input class="@error('gambar') is-invalid @enderror" type="file" id="gambar" name="gambar" value="{{ old('gambar') }}">
+                                    <input class="@error('gambar') is-invalid @enderror" type="file" id="gambar" name="gambar">
                                 </div>
                                 <hr class="text-white">
                                 <div class="d-flex justify-content-end">

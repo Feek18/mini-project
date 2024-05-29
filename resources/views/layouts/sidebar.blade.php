@@ -4,6 +4,7 @@
         <div class="sidebar">
             @if (Auth::user())
                 <a class="text-decoration-none text-white" style="font-size: 32px" href="{{ route('profil') }}">{{ Auth::user()->username }}</a>
+                <p class="text-white">{{ Auth::user()->nama }}</p>
             @else
                 <h3 class="text-white">Login Dahulu</h3>
                 <p class="text-white">ayo login</p>

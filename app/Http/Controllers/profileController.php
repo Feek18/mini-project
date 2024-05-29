@@ -6,6 +6,7 @@ use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class profileController extends Controller
 {
@@ -37,7 +38,7 @@ class profileController extends Controller
 
         $validateData = $request->validate([
             'deskripsi' => 'required',
-            'gambar' => 'required', 'nullable', 'gambar'
+            'gambar' => 'required', 'gambar'
         ]);
 
         if ($gambarPath !== '') {
@@ -55,6 +56,35 @@ class profileController extends Controller
         return redirect()->route('index')->with(['users' => $product, 'gambarPath' => $gambarPath]);
 
     }
-       
+    
+    public function edit()
+    {
+        $user = User::where('id', Auth::user()->id)->first();
+        return view('pages/ediprofile', ['user' => $user]);
+
+        // echo($user);
+    }
+    public function update(Request $request, $id){
+        
+        $gambarPath = $request->oldGambar; // Default to the old image path if no new image is uploaded
+    
+        if ($request->hasFile('gambar')) {
+            if ($request->oldGambar) {
+                Storage::delete($request->oldGambar);
+            }
+    
+            $gambarPath = $request->file('gambar')->store('public/img');
+        }
+    
+        $user = User::where('id', $id)->update([ 
+            'gambar' => $gambarPath,
+            'username' => $request->username,
+            'nama' => $request->nama,
+            'bio' => $request->bio
+        ]);
+    
+        // echo($user);
+        return redirect()->route('profil');
+    }
 
 }

@@ -1,3 +1,4 @@
+p
 <!DOCTYPE html>
 <html lang="en">
 
@@ -42,9 +43,12 @@
             align-items: center;
             gap: 10px;
         }
+
         .form-group label {
-            min-width: 80px; /* You can adjust this width as needed */
+            min-width: 80px;
+            /* You can adjust this width as needed */
         }
+
         .form-control {
             flex: 1;
         }
@@ -60,38 +64,58 @@
             <div class="container mt-5">
                 <div class="">
                     <div class="d-flex flex-column align-items-center">
-                        <img style="border-radius: 50%;"
-                            src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?q=80&w=1985&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                            width="100px" height="100px" alt="Profile Picture">
-                        <p class="text-white mt-3">Edit Profile</p>
-                        <div class="w-100 mt-3" style="max-width: 500px;">
-                            <form action="">
+                        <form action="{{ route('updateData', ['id' => $user->id]) }}" method="POST"
+                            enctype="multipart/form-data">
+                            @csrf
+                            @method('PUT')
+                            <img style="border-radius: 50%; cursor: pointer;"
+                                src=""
+                                width="130px" height="130px" id="profileImg" alt="Profile Picture">
+                            <input type="file" name="gambar" id="profileImageUpload" style="display: none;">
+                            <p class="text-white mt-3">Edit Profile</p>
+                            <div class="w-100 mt-3" style="max-width: 500px;">
                                 <div class="form-group mb-3">
                                     <label for="username" class="text-white">Username</label>
                                     <input type="text" class="form-control" name="username" id="username"
                                         placeholder="Enter username">
                                 </div>
                                 <div class="form-group mb-3">
-                                    <label for="name" class="text-white">Name</label>
-                                    <input type="text" class="form-control" name="name" id="name"
+                                    <label for="nama" class="text-white">Name</label>
+                                    <input type="text" class="form-control" name="nama" id="nama"
                                         placeholder="Enter name">
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="bio" class="text-white">Bio</label>
                                     <textarea class="form-control" name="bio" id="bio" rows="3" placeholder="Enter bio"></textarea>
-                                </div>
+                            </div>
                                 <button type="submit" class="btn btn-primary float-end">Edit</button>
-                            </form>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </section>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#profileImg').click(function() {
+                $('#profileImageUpload').click();
+            });
+
+            $('#profileImageUpload').change(function(event) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#profileImg').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(event.target.files[0]);
+            });
+        });
     </script>
 </body>
 

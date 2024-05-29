@@ -42,8 +42,8 @@
         .profile-container {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            text-align: center;
+            /* align-items: center; */
+            text-align: start;
         }
 
         .header {
@@ -77,9 +77,7 @@
             <div class="d-flex text-center flex-column">
                 <div class="container mt-5">
                     <div class="d-flex align-items-center" style="gap: 18px;">
-                        <img style="border-radius: 100px"
-                            src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?q=80&w=1985&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                            width="150px" height="150px" alt="">
+                        <img style="border-radius: 100px" src="{{ Storage::url($user->gambar) }}" width="155px" height="155px" alt="">
                         <div class="profile-container text-white">
                             <div class="header">
                                 @if (Auth::user())
@@ -100,14 +98,16 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
-                                            <div class="modal-body">
-                                                <div class="input-group mb-3">
-                                                    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                            <form action="" id="confirmPasswordForm">
+                                                <div class="modal-body">
+                                                    <div class="input-group mb-3">
+                                                        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-primary">Konfirmasi</button>
-                                            </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-primary">Konfirmasi</button>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -118,9 +118,9 @@
                                 <a class="text-decoration-none text-white" href="{{ route('following') }}">0
                                     following</a>
                             </div>
-                            <div class="d-flex justify-content-between align-items-center" style="gap: 30px">
-                                <h5>Rudiansyah Pratama Wijaya</h5>
-                                <i class="fa-brands fa-linkedin"></i>
+                            <div class="d-flex flex-column" style="gap: 4px">
+                                <h5>{{ $user->nama }}</h5>
+                                <span>{{ $user->bio }}</span>
                             </div>
                         </div>
                     </div>
@@ -165,6 +165,24 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#confirmPasswordForm').on('submit', function(event) {
+    
+                event.preventDefault();
+                var password = $('#password').val();
+    
+                const password_auth = document.querySelector('#password-auth');
+    
+                if (password === password ) {
+                    window.location.href = '/edit-profil'; // Redirect ke halaman edit profil
+                } else {
+                    alert('Password incorrect');
+                }
+            });
+        });
     </script>
 </body>
 

@@ -5,24 +5,25 @@
             <div class="main-content">
                 <div class="row">
                     <div class="col-md-12">
+                        @foreach ($post as $i)
                         <div class="card mb-4" style="width: 550px">
                             <div class="d-flex justify-content-between align-items-center p-3">
                                 <div class="d-flex gap-3">
                                     <img style="border-radius: 100px"
-                                        src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?q=80&w=1985&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                        src="{{ Storage::url($i->user->gambar) }}"
                                         width="11%" alt="">
                                     <div>
-                                        <h5>reezyx</h5>
-                                        <span>1 day ago</span>
+                                        <h5>{{ $i->user->username }}</h5>
+                                        <span>{{ \Carbon\Carbon::parse($i->created_at)->diffForHumans() }}</span>
                                     </div>
                                 </div>
                                 <hr>
                             </div>
                             <div class="d-flex flex-column">
                                 <div class="p-2">
-                                    <h6 class="title flex-start">You should go here bro✨</h6>
+                                    <h6 class="title flex-start">{{ $i->deskripsi }}</h6>
                                     <a href="{{ route('detail') }}">
-                                      <img src="https://images.unsplash.com/photo-1506112573664-1a1b66d93ff3?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                      <img src="{{ Storage::url($i->gambar) }}"
                                           width="532px" alt="">
                                     </a>
                                     <hr>
@@ -44,47 +45,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="card mb-4" style="width: 550px">
-                            <div class="d-flex justify-content-between align-items-center p-3">
-                                <div class="d-flex gap-3">
-                                    <img style="border-radius: 100px"
-                                        src="https://images.unsplash.com/photo-1457449940276-e8deed18bfff?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                                        width="11%" alt="">
-                                    <div>
-                                        <h5>arhandev</h5>
-                                        <span>1 day ago</span>
-                                    </div>
-                                </div>
-                                <hr>
-                            </div>
-                            <div class="d-flex flex-column">
-                                <div class="p-2">
-                                    <h6 class="title flex-start">Sunset so pretty, isn'it?✨</h6>
-                                    <a href="{{ route('detail') }}">
-                                      <img src="https://images.unsplash.com/photo-1582522830284-172076f71e39?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                                          width="532px" height="400px" alt="">
-                                    </a>
-                                    <hr>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="d-flex gap-4">
-                                            <div>
-                                                <i class="fa-regular fa-heart"></i>
-                                                <p>likes</p>
-                                            </div>
-                                            <div>
-                                                <i class="fa-regular fa-comment"></i>
-                                                <p>comments</p>
-                                            </div>
-                                        </div>
-                                        <a href="">
-                                            <i class="fa-regular fa-bookmark"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

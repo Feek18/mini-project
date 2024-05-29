@@ -4,6 +4,8 @@ use App\Http\Controllers\daftarController;
 use App\Http\Controllers\detailController;
 use App\Http\Controllers\followController;
 use App\Http\Controllers\profileController;
+use App\Models\Post;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,7 +20,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('index');
+    return view('index', [
+        'post' => Post::orderBy('created_at', 'desc')->get(),
+        'user' => User::all(),
+    ]);
 })->name('index');
 
 // regis
@@ -38,7 +43,8 @@ Route::get('/explore', [detailController::class, 'explore'])->name('explore');
 // profil
 Route::get('/profile', [profileController::class, 'profil'])->name('profil');
 // edit
-Route::get('/edit-profil', [profileController::class, 'ediProfil'])->name('editProfil');
+Route::get('/edit-profil', [profileController::class, 'edit'])->name('editProfil');
+Route::put('/edit-profil/{id}/update', [profileController::class, 'update'])->name('updateData');
 // follow
 Route::get('/following', [followController::class, 'following'])->name('following');
 // notify
