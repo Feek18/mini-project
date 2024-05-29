@@ -37,47 +37,41 @@
     {{-- login page --}}
     <section>
         <div class="container">
-            <div class="row">
-                <div class="">
-                    <div class="col-md-8">
-                        <div class="d-flex justify-content-center align-items-center">
-                            @if (session('error'))
-                                <div class="alert alert-danger">{{ session('error') }}</div>
-                            @endif
-                            <div style="width: 50%">
-                                <h1 class="text-white fw-bold">Login Form</h1>
-                                <p class="text-white">Please fill to get your account!!</p>
-                                <div class="mt-4">
-                                    <form action="{{ route('login_user') }}" method="POST">
-                                        @csrf
-                                        <div class="form-group mb-3">
-                                            <label class="text-white mb-1" for="username">Username</label>
-                                            <input type="text" name="username" id="username" class="form-control"
-                                                placeholder="Masukan Email Kamu" required>
-                                            @error('username')
-                                                <div class="text-danger mt-2">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group mb-4">
-                                            <label class="text-white mb-1" for="password">Password</label>
-                                            <input type="password" name="password" id="password" class="form-control"
-                                                placeholder="Masukan Password Kamu" required>
-                                            @error('password')
-                                                <div class="text-danger mt-2">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        <p class="text-white mb-3">Don't have an account?
-                                            <a href="{{ route('regis') }}">
-                                                <strong>Sign Up here</strong>
-                                            </a>
-                                        </p>
-                                        <button class="btn login btn-primary" type="submit">
-                                            Login
-                                        </button>
-                                    </form>
-                                </div>
+            <div class="d-flex justify-content-center align-items-center">
+                <div style="width: 50%">
+                    @if (session('error'))
+                        <div class="alert alert-danger">{{ session('error') }}</div>
+                    @endif
+                    <h1 class="text-white fw-bold">Login Form</h1>
+                    <p class="text-white">Please fill to get your account!!</p>
+                    <div class="mt-4">
+                        <form action="{{ route('login_user') }}" method="POST">
+                            @csrf
+                            <div class="form-group mb-3">
+                                <label class="text-white mb-1" for="username">Username</label>
+                                <input type="text" name="username" id="username" class="form-control"
+                                    placeholder="Masukan Email Kamu" required>
+                                @error('username')
+                                    <div class="text-danger mt-2">{{ $message }}</div>
+                                @enderror
                             </div>
-                        </div>
+                            <div class="form-group mb-4">
+                                <label class="text-white mb-1" for="password">Password</label>
+                                <input type="password" name="password" id="password" class="form-control"
+                                    placeholder="Masukan Password Kamu" required>
+                                @error('password')
+                                    <div class="text-danger mt-2">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <p class="text-white mb-3">Don't have an account?
+                                <a href="{{ route('regis') }}">
+                                    <strong>Sign Up here</strong>
+                                </a>
+                            </p>
+                            <button class="btn login btn-primary" type="submit">
+                                Login
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>

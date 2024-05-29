@@ -37,10 +37,10 @@
     <section>
         <div class="container">
             <div class="d-flex justify-content-center align-items-center">
-                @if (session('error'))
-                    <div class="alert alert-danger">{{ session('error') }}</div>
-                @endif
                 <div style="width: 550px">
+                    @if (session('error'))
+                        <div class="alert alert-danger">{{ session('error') }}</div>
+                    @endif
                     <h1 class="text-white fw-bold">Signup Form</h1>
                     <p class="text-white">Please create your account!!</p>
                     <div>
