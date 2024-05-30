@@ -143,8 +143,8 @@
                 <div class="card mt-4 p-4"
                     style="width: 1190px; background-color: transparent; border: 1px solid #FFFF">
                     <div class="d-flex align-items-center gap-2 text-white">
-                        <img style="border-radius: 100px; object-fit: cover" src="{{ Storage::url($posts->user->gambar) }}" width="50px"
-                            height="50px" alt="">
+                        <img style="border-radius: 100px; object-fit: cover"
+                            src="{{ Storage::url($posts->user->gambar) }}" width="50px" height="50px" alt="">
                         <h3>{{ $posts->user->username }}</h3>
                     </div>
                     <div class="d-flex align-items-start mt-3 text-white">
@@ -154,6 +154,27 @@
                         </div>
                         <div class="col-md-6">
                             <h4>komentar</h4>
+                            @foreach ($comment as $c)
+                                <div class="d-flex align-items-center mb-2">
+                                    <img class="me-3" style="border-radius: 100px; object-fit: cover"
+                                        src="{{ Storage::url($c->user->gambar) }}" width="50px" height="50px"
+                                        alt="">
+                                    <h6>{{ $c->user->username }}</h6>
+                                </div>
+                                <div>
+                                    <span class="me-5">{{ $c->komen }}</span>
+                                    <p>reply</p>
+                                </div>
+                                {{-- <div class="">
+                                    <h4>adits</h4>
+                                    <p>salken</p>
+                                </div> --}}
+                            @endforeach
+                            {{-- @php
+                                foreach ($comment as $c) {
+                                    echo ($c->user->id);
+                                }
+                            @endphp --}}
                             <hr style="width: 65%">
                             <div class="d-flex align-items-center">
                                 <div class="d-flex">
@@ -164,11 +185,13 @@
                                 <i class="fa-regular fa-bookmark"></i>
                             </div>
                             <div class="mt-4">
-                                <form class="input-group-custom" action="{{ route('komen-data') }}" method="POST" enctype="multipart/form-data">
+                                <form class="input-group-custom" action="{{ route('komen-data') }}" method="POST"
+                                    enctype="multipart/form-data">
                                     @csrf
                                     <div class="input-grup">
+                                        <input type="hidden" name="post_id" value="{{ $post_id }}">
                                         <input type="text" class="form-control me-2"
-                                            placeholder="Tulis komentar anda">
+                                            placeholder="Tulis komentar anda" name="komen" id="komen">
                                         <button class="btn text-white" type="submit">Kirim</button>
                                     </div>
                                 </form>

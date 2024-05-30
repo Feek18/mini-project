@@ -17,6 +17,9 @@ class Komen extends Model
         return $this->hasMany(Like_Komen::class);
     }
     public function user(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'id_user');
+    }
+    public function post(){
+        return $this->belongsTo(Post::class, 'post_id');
     }
 }

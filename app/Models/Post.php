@@ -10,16 +10,16 @@ class Post extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
-    public function like(){
+    public function likes(){
         return $this->hasMany(Like::class);
     }
-    public function reply(){
+    public function replies(){
         return $this->hasMany(Reply::class);
     }
-    public function favorite(){
+    public function favorites(){
         return $this->hasMany(Favorite::class);
     }
-    public function comment(){
+    public function comments(){
         return $this->hasMany(Komen::class);
     }
     public function user(){
