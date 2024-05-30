@@ -30,6 +30,8 @@ p
 
         .wrapper {
             display: flex;
+            justify-content: center;
+            gap: 350px;
         }
 
         .sidebar {
@@ -46,7 +48,6 @@ p
 
         .form-group label {
             min-width: 80px;
-            /* You can adjust this width as needed */
         }
 
         .form-control {
@@ -62,35 +63,45 @@ p
             {{-- sidebar --}}
             @include('layouts.sidebar')
             <div class="container mt-5">
-                <div class="">
-                    <div class="d-flex flex-column align-items-center">
-                        <form action="{{ route('updateData', ['id' => $user->id]) }}" method="POST"
-                            enctype="multipart/form-data">
-                            @csrf
-                            @method('PUT')
-                            <img style="border-radius: 50%; cursor: pointer;"
-                                src=""
-                                width="130px" height="130px" id="profileImg" alt="Profile Picture">
+                <div>
+                    <form action="{{ route('updateData', ['id' => $user->id]) }}" method="POST"
+                        enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+                        <div class="d-flex flex-column justify-content-center align-items-center"
+                            style="max-width: 500px;">
+                            @if ($user)
+                                @if ($user->gambar)
+                                    <img style="border-radius: 50%; cursor: pointer;"
+                                        src="{{ Storage::url($user->gambar) }}" width="130px" height="130px"
+                                        id="profileImg" alt="Profile Picture">
+                                @else
+                                    <img style="border-radius: 50%; cursor: pointer;"
+                                        src="{{ asset('placeholder-image.jpg') }}" width="130px" height="130px"
+                                        id="profileImg" alt="Profile Picture">
+                                @endif
+                            @endif
                             <input type="file" name="gambar" id="profileImageUpload" style="display: none;">
                             <p class="text-white mt-3">Edit Profile</p>
-                            <div class="w-100 mt-3" style="max-width: 500px;">
+                            <div class="w-100 mt-3">
                                 <div class="form-group mb-3">
                                     <label for="username" class="text-white">Username</label>
-                                    <input type="text" class="form-control" name="username" id="username"
+                                    <input type="text" class="form-control" value="{{ $user->username }}" name="username" id="username"
                                         placeholder="Enter username">
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="nama" class="text-white">Name</label>
-                                    <input type="text" class="form-control" name="nama" id="nama"
+                                    <input type="text" class="form-control" value="{{ $user->nama }}" name="nama" id="nama"
                                         placeholder="Enter name">
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="bio" class="text-white">Bio</label>
-                                    <textarea class="form-control" name="bio" id="bio" rows="3" placeholder="Enter bio"></textarea>
-                            </div>
+                                    <textarea class="form-control" name="bio" id="bio" rows="3" placeholder="Enter bio">{{ $user->bio }}</textarea>
+                                </div>
                                 <button type="submit" class="btn btn-primary float-end">Edit</button>
-                        </form>
-                    </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

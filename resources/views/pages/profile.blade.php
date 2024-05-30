@@ -77,13 +77,14 @@
             <div class="d-flex text-center flex-column">
                 <div class="container mt-5">
                     <div class="d-flex align-items-center" style="gap: 18px;">
-                        <img style="border-radius: 100px" src="{{ Storage::url($user->gambar) }}" width="155px" height="155px" alt="">
+                        <img style="border-radius: 100px" src="{{ Storage::url($user->gambar) }}" width="155px"
+                            height="155px" alt="">
                         <div class="profile-container text-white">
                             <div class="header">
                                 @if (Auth::user())
                                     <h3>{{ Auth::user()->username }}</h3>
                                 @else
-                                <p>gagal memuat</p>
+                                    <p>gagal memuat</p>
                                 @endif
                                 <button type="button" class="btn text-white" data-bs-toggle="modal"
                                     data-bs-target="#exampleModal">
@@ -94,14 +95,17 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">Konfirmasi Password</h1>
+                                                <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">Konfirmasi
+                                                    Password</h1>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
                                             <form action="" id="confirmPasswordForm">
                                                 <div class="modal-body">
                                                     <div class="input-group mb-3">
-                                                        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                                        <input type="text" class="form-control"
+                                                            aria-label="Sizing example input"
+                                                            aria-describedby="inputGroup-sizing-default">
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
@@ -128,13 +132,15 @@
                 {{-- konten postingan --}}
                 <div class="post">
                     @foreach ($product as $data)
-                    <div class="card" style="width: 330px;">
-                        @if ($data->gambar)
-                        <img src="{{ Storage::url($data->gambar) }}" alt="">    
-                        @else
-                        <span>tidak ada gambar</span>
+                        @if ($data->user_id == auth()->id()) <!-- Memeriksa apakah pengguna saat ini adalah pemilik produk -->
+                            <div class="card" style="width: 330px;">
+                                @if ($data->gambar)
+                                    <img src="{{ Storage::url($data->gambar) }}" alt="">
+                                @else
+                                    <span>tidak ada gambar</span>
+                                @endif
+                            </div>
                         @endif
-                    </div>
                     @endforeach
                 </div>
                 <footer style="margin-top: 1000px; width: 100%; text-align: center;">
@@ -170,13 +176,13 @@
     <script>
         $(document).ready(function() {
             $('#confirmPasswordForm').on('submit', function(event) {
-    
+
                 event.preventDefault();
                 var password = $('#password').val();
-    
+
                 const password_auth = document.querySelector('#password-auth');
-    
-                if (password === password ) {
+
+                if (password === password) {
                     window.location.href = '/edit-profil'; // Redirect ke halaman edit profil
                 } else {
                     alert('Password incorrect');
