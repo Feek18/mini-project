@@ -9,7 +9,7 @@
                         <div class="card mb-4" style="width: 550px">
                             <div class="d-flex justify-content-between align-items-center p-3">
                                 <div class="d-flex gap-3">
-                                    <img style="border-radius: 100px"
+                                    <img style="border-radius: 100px; object-fit: cover"
                                         src="{{ Storage::url($i->user->gambar) }}"
                                         width="11%" alt="">
                                     <div>
@@ -22,7 +22,7 @@
                             <div class="d-flex flex-column">
                                 <div class="p-2">
                                     <h6 class="title flex-start">{{ $i->deskripsi }}</h6>
-                                    <a href="{{ route('detail') }}">
+                                    <a href="{{ route('detail', $i->id) }}">
                                       <img src="{{ Storage::url($i->gambar) }}"
                                           width="532px" alt="">
                                     </a>
@@ -31,11 +31,11 @@
                                         <div class="d-flex gap-4">
                                             <div>
                                                 <i class="fa-regular fa-heart"></i>
-                                                <p>likes</p>
+                                                <span>likes</span>
                                             </div>
                                             <div>
                                                 <i class="fa-regular fa-comment"></i>
-                                                <p>comments</p>
+                                                <span>comments</span>
                                             </div>
                                         </div>
                                         <a href="">
@@ -54,18 +54,18 @@
                     <div class="follow-body text-white">
                         <h2>Siapa yang harus diikuti</h2>
                         <p>Orang yang mungkin anda kenal</p>
-                        <div class="d-flex align-items-center">
+                        {{-- <div class="d-flex align-items-center">
                             <div class="d-flex gap-3">
                                 <img style="border-radius: 100%"
-                                    src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?q=80&w=1985&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                    src="{{ Storage::url($post->user->gambar) }}"
                                     width="17%" alt="">
                                 <div>
-                                    <h4>reezyx</h4>
-                                    <span>Rudiansyah Wijaya Pratama</span>
-                                </div>
+                                    <h4>{{ $post->user->username }}</h4>
+                                    <span class="text-white">{{ $post->user->nama }}</span>
+                                </div>  
                             </div>
                             <a class="text-decoration-none" style="color: #FFDB5C" href="">Follow</a>
-                        </div>
+                        </div> --}}
                         <div class="d-flex align-items-center mt-3">
                             <div class="d-flex gap-3">
                                 <img style="border-radius: 100%"

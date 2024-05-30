@@ -3,6 +3,7 @@
 use App\Http\Controllers\daftarController;
 use App\Http\Controllers\detailController;
 use App\Http\Controllers\followController;
+use App\Http\Controllers\fungsiPostingController;
 use App\Http\Controllers\profileController;
 use App\Models\Post;
 use App\Models\User;
@@ -36,12 +37,15 @@ Route::post('/login-user', [daftarController::class, 'doneLogin'])->name('login_
 Route::get('/logout', [daftarController::class, 'logout'])->name('logout');
 
 // detail gambar
-Route::get('/detail', [detailController::class, 'detailGambar'])->name('detail');
+Route::get('/detail/{id}', [detailController::class, 'detailGambar'])->name('detail')->middleware('auth');
+Route::post('/detail-data', [detailController::class, 'store'])->name('komen-data');
 // explore
 Route::get('/explore', [detailController::class, 'explore'])->name('explore');
 
 // profil
 Route::get('/profile', [profileController::class, 'profil'])->name('profil');
+// menampilkan user login lain
+Route::get('/user/{id}', [profileController::class, 'showOtherUser'])->middleware('auth');
 // edit
 Route::get('/edit-profil', [profileController::class, 'edit'])->name('editProfil');
 Route::put('/edit-profil/{id}/update', [profileController::class, 'update'])->name('updateData');
@@ -52,3 +56,5 @@ Route::get('/notifikasi', [profileController::class, 'notify'])->name('notify');
 // posting
 Route::get('/posting', [profileController::class, 'posting'])->name('posting');
 Route::post('/form-data', [profileController::class, 'store'])->name('formData');
+// like
+Route::post('/post/{id}/like', [fungsiPostingController::class, 'likePost'])->name('like');

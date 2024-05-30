@@ -94,21 +94,33 @@
         }
 
         .input-group-custom {
-            max-width: 380px; /* Atur sesuai kebutuhan */
+            max-width: 380px;
+            /* Atur sesuai kebutuhan */
         }
+
         .border-bottom {
-            border: none; /* Menghilangkan semua border */
-            border-bottom: 1px solid #ccc; /* Menambahkan border bawah */
-            border-radius: 0; /* Menghilangkan border-radius */
-            width: 100%; /* Membuat inputan memenuhi lebar parent */
+            border: none;
+            /* Menghilangkan semua border */
+            border-bottom: 1px solid #ccc;
+            /* Menambahkan border bawah */
+            border-radius: 0;
+            /* Menghilangkan border-radius */
+            width: 100%;
+            /* Membuat inputan memenuhi lebar parent */
         }
+
         .border-bottom:focus {
-            box-shadow: none; /* Menghilangkan shadow saat fokus */
-            border-bottom: 1px solid #007bff; /* Warna border saat fokus */
+            box-shadow: none;
+            /* Menghilangkan shadow saat fokus */
+            border-bottom: 1px solid #007bff;
+            /* Warna border saat fokus */
         }
+
         .input-grup {
-            display: flex; /* Flexbox untuk elemen dalam div ini */
-            align-items: center; /* Vertikal rata tengah */
+            display: flex;
+            /* Flexbox untuk elemen dalam div ini */
+            align-items: center;
+            /* Vertikal rata tengah */
         }
     </style>
 </head>
@@ -124,21 +136,21 @@
             <div class="mt-5">
                 {{-- back --}}
                 <div class="d-flex align-items-center">
-                    <a class="text-decoration-none text-white" href="{{ route('index') }}"><i class="fa-solid fa-chevron-left me-3"></i>back</a>
+                    <a class="text-decoration-none text-white" href="{{ route('index') }}"><i
+                            class="fa-solid fa-chevron-left me-3"></i>back</a>
                 </div>
                 {{-- detail body --}}
-                <div class="card mt-4 p-4" style="width: 1190px; background-color: transparent; border: 1px solid #FFFF">
+                <div class="card mt-4 p-4"
+                    style="width: 1190px; background-color: transparent; border: 1px solid #FFFF">
                     <div class="d-flex align-items-center gap-2 text-white">
-                        <img style="border-radius: 100px"
-                        src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?q=80&w=1985&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                        width="50px" height="50px" alt="">
-                        <h3>reezyx</h3>
+                        <img style="border-radius: 100px; object-fit: cover" src="{{ Storage::url($posts->user->gambar) }}" width="50px"
+                            height="50px" alt="">
+                        <h3>{{ $posts->user->username }}</h3>
                     </div>
                     <div class="d-flex align-items-start mt-3 text-white">
                         <div class="col-md-8">
-                            <h6 class="title flex-start">You should go here bro✨</h6>
-                            <img src="https://images.unsplash.com/photo-1506112573664-1a1b66d93ff3?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" width="95%"
-                            alt="">
+                            <h6 class="title flex-start">{{ $posts->user->deskripsi }}</h6>
+                            <img src="{{ Storage::url($posts->gambar) }}" width="95%" alt="">
                         </div>
                         <div class="col-md-6">
                             <h4>komentar</h4>
@@ -152,22 +164,20 @@
                                 <i class="fa-regular fa-bookmark"></i>
                             </div>
                             <div class="mt-4">
-                                <form class="input-group-custom" action="">
+                                <form class="input-group-custom" action="{{ route('komen-data') }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
                                     <div class="input-grup">
-                                        <input type="text" class="form-control me-2" placeholder="Tulis komentar anda">
+                                        <input type="text" class="form-control me-2"
+                                            placeholder="Tulis komentar anda">
                                         <button class="btn text-white" type="submit">Kirim</button>
                                     </div>
                                 </form>
-                            </div>                           
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-        </div>
-        <div>
-            {{-- footer --}}
-            @include('layouts.footer')
         </div>
     </section>
 

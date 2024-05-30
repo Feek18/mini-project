@@ -77,8 +77,7 @@
             <div class="d-flex text-center flex-column">
                 <div class="container mt-5">
                     <div class="d-flex align-items-center" style="gap: 18px;">
-                        <img style="border-radius: 100px" src="{{ Storage::url($user->gambar) }}" width="155px"
-                            height="155px" alt="">
+                        <img style="border-radius: 100px; width: 155px; height: 155px; object-fit: cover" src="{{ Storage::url($user->gambar) }}" alt="">
                         <div class="profile-container text-white">
                             <div class="header">
                                 @if (Auth::user())
@@ -135,7 +134,7 @@
                         @if ($data->user_id == auth()->id()) <!-- Memeriksa apakah pengguna saat ini adalah pemilik produk -->
                             <div class="card" style="width: 350px;">
                                 @if ($data->gambar)
-                                    <img src="{{ Storage::url($data->gambar) }}" width="350px" height="180px" alt="">
+                                    <img style="object-fit: cover" src="{{ Storage::url($data->gambar) }}" width="350px" height="180px" alt="">
                                 @else
                                     <span>tidak ada gambar</span>
                                 @endif

@@ -79,7 +79,7 @@
 
         .sidebar {
             position: sticky;
-            top: 25px;
+            top: 30px;
             z-index: 5;
         }
 
@@ -108,11 +108,11 @@
             </div>
 
         </div>
-        @guest    
-        <div>
-            {{-- footer --}}
-            @include('layouts.footer')
-        </div>
+        @guest
+            <div>
+                {{-- footer --}}
+                @include('layouts.footer')
+            </div>
         @endguest
     </section>
 
