@@ -133,9 +133,9 @@
                 <div class="post">
                     @foreach ($product as $data)
                         @if ($data->user_id == auth()->id()) <!-- Memeriksa apakah pengguna saat ini adalah pemilik produk -->
-                            <div class="card" style="width: 330px;">
+                            <div class="card" style="width: 350px;">
                                 @if ($data->gambar)
-                                    <img src="{{ Storage::url($data->gambar) }}" alt="">
+                                    <img src="{{ Storage::url($data->gambar) }}" width="350px" height="180px" alt="">
                                 @else
                                     <span>tidak ada gambar</span>
                                 @endif
