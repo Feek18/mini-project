@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Auth;
 
 class fungsiPostingController extends Controller
 {
+    public function bookmark(Request $request){
+        return view('../pages/bookmarks');
+    }
     public function likePost($id)
     {
         $post = Post::findOrFail($id);

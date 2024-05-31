@@ -22,10 +22,11 @@
             margin: 0;
             padding: 0;
             background-color: #151515;
+            overflow-x: hidden;
         }
 
         .wrapper {
-            width: 100%;
+            width: auto;
             min-height: 100vh;
             display: flex;
             gap: 24px;
@@ -44,7 +45,7 @@
 
         .follow {
             overflow: hidden;
-            position: sticky;
+            position: fixed;
             top: 100px;
         }
 
@@ -61,7 +62,7 @@
             display: flex;
             flex: 1;
             padding: 32px;
-            gap: 100px
+            gap: 50px
         }
 
         .main-content {
@@ -70,15 +71,15 @@
 
         header {
             background-color: #151515;
-            position: sticky;
+            position: fixed;
             top: 0;
             z-index: 5;
-            width: 100%;
-            padding: 10px 0;
+            width: 75%;
+            padding: 0;
         }
 
         .sidebar {
-            position: sticky;
+            position: fixed;
             top: 30px;
             z-index: 5;
         }

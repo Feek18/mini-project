@@ -1,22 +1,22 @@
 {{-- content search --}}
 <section class="mt-4">
     <div class="container">
-        <div class="d-flex justify-content-center">
-            <div class="input-group d-flex justify-content-center align-items-center text-white gap-3 mb-3">
-                <input type="text" class="form-control" style="background-color: transparent;">
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </div>
-        </div>
-        <div class="content">
+        <div class="content" style="width: 950px;">
             <div class="text-white">
+                <div class="d-flex">
+                    <div class="input-group d-flex justify-content-center align-items-center text-white gap-3 mb-3">
+                        <input type="text" class="form-control" style="background-color: transparent;">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                </div>
                 <h3 class="mt-3">Hasil Pencarianmu</h3>
                 <div class="d-flex align-items-center mt-4">
                     <div class="d-flex align-items-center">
                         <div class="d-flex align-items-center gap-3">
-                            <img style="border-radius: 100%"
+                            <img style="border-radius: 100%; width: 90px;"
                                 src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?q=80&w=1985&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                                width="15%" alt="">
-                            <div>
+                                alt="">
+                            <div class="me-5">
                                 <h4>reezyx</h4>
                                 <span>Rudiansyah Wijaya Pratama</span>
                             </div>

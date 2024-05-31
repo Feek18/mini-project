@@ -28,9 +28,9 @@
         }
 
         .wrapper {
-            width: 500px;
+            width: 400px;
             display: flex;
-            gap: 100px;
+            gap: 55px;
         }
 
         .sidebar {

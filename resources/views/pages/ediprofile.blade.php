@@ -72,7 +72,7 @@ p
                             style="max-width: 500px;">
                             @if ($user)
                                 @if ($user->gambar)
-                                    <img style="border-radius: 50%; cursor: pointer;"
+                                    <img style="border-radius: 50%; cursor: pointer; object-fit: cover;"
                                         src="{{ Storage::url($user->gambar) }}" width="130px" height="130px"
                                         id="profileImg" alt="Profile Picture">
                                 @else

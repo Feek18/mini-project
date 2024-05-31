@@ -1,7 +1,7 @@
 {{-- sidebar --}}
 <section style="sidebar">
-    <div class="card border-end border-white p-4" style="width: 280px; min-height: 200vh; background-color: #151515">
-        <div class="sidebar">
+    <div class="card border-end border-white p-4" style="width: 280px; min-height: 200vh; background-color: #151515; position: -webkit-sticky; position: sticky; top: 0;">
+        <div class="sidebar" style="min-height: 200vh;">
             @if (Auth::user())
                 <a class="text-decoration-none text-white" style="font-size: 32px" href="{{ route('profil') }}">{{ Auth::user()->username }}</a>
                 <p class="text-white">{{ Auth::user()->nama }}</p>
@@ -34,7 +34,7 @@
                         </a>
                     </li>
                     <li class="nav-item mb-3">
-                        <a class="text-decoration-none text-white" href="" class="nav-link">
+                        <a class="text-decoration-none text-white" href="{{ route('bookmark') }}" class="nav-link">
                             <i class="fa-solid fa-bookmark me-3"></i>Bookmarks
                         </a>
                     </li>

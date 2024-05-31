@@ -141,8 +141,8 @@
                 </div>
                 {{-- detail body --}}
                 <div class="card mt-4 p-4"
-                    style="width: 1190px; background-color: transparent; border: 1px solid #FFFF">
-                    <div class="d-flex align-items-center gap-2 text-white">
+                    style="width: 98%; background-color: transparent; border: 1px solid #FFFF">
+                    <div class="d-flex justify-content-start align-items-center gap-2 text-white">
                         <img style="border-radius: 100px; object-fit: cover"
                             src="{{ Storage::url($posts->user->gambar) }}" width="50px" height="50px" alt="">
                         <h3>{{ $posts->user->username }}</h3>

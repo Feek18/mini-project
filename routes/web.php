@@ -41,6 +41,8 @@ Route::get('/detail/{id}', [detailController::class, 'detailGambar'])->name('det
 Route::post('/detail-data', [detailController::class, 'store'])->name('komen-data');
 // explore
 Route::get('/explore', [detailController::class, 'explore'])->name('explore');
+// bookmark
+Route::get('/bookmark', [fungsiPostingController::class, 'bookmark'])->name('bookmark');
 
 // profil
 Route::get('/profile', [profileController::class, 'profil'])->name('profil');

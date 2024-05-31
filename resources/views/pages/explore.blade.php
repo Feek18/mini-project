@@ -46,7 +46,7 @@
 
         .follow {
             overflow: hidden;
-            position: sticky;
+            position: fixed;
             top: 100px;
         }
 
@@ -62,8 +62,8 @@
         .content {
             display: flex;
             flex: 1;
-            padding: 32px;
-            gap: 100px
+            padding: 34px;
+            gap: 150px
         }
 
         .main-content {
@@ -80,7 +80,7 @@
         }
 
         .sidebar {
-            position: sticky;
+            position: fixed;
             top: 25px;
             z-index: 5;
         }
@@ -92,12 +92,12 @@
             height: 150px;
         }
 
-        .content {
+        /* .content {
             display: flex;
             justify-content: center;
             padding: 32px;
-            gap: 200px
-        }
+            gap: 550px;
+        } */
 
         .follow-head {
             flex: 1;
@@ -105,7 +105,7 @@
 
         .follow {
             overflow: hidden;
-            position: sticky;
+            position: fixed;
             top: 100px;
         }
 
@@ -138,10 +138,6 @@
             </div>
             
 
-        </div>
-        <div>
-            {{-- footer --}}
-            @include('layouts.footer')
         </div>
     </section>
 
