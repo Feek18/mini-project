@@ -10,8 +10,8 @@ class Komen extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
-    public function reply(){
-        return $this->hasMany(Reply::class);
+    public function replies(){
+        return $this->hasMany(Reply::class, 'comment_id');
     }
     public function like_komen(){
         return $this->hasMany(Like_Komen::class);

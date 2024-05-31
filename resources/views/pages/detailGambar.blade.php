@@ -34,52 +34,6 @@
             gap: 24px;
         }
 
-        .row {
-            display: grid;
-            grid-template-columns: repeat(1, 1fr);
-            gap: 17px;
-            margin-top: 2px;
-        }
-
-        .follow-head {
-            flex: 1;
-        }
-
-        .follow {
-            overflow: hidden;
-            position: sticky;
-            top: 100px;
-        }
-
-        .follow-body {
-            display: flex;
-            flex-direction: column;
-            width: 400px;
-            border-radius: 8px;
-            margin-top: 20px;
-            flex-grow: 1;
-        }
-
-        .content {
-            display: flex;
-            flex: 1;
-            padding: 32px;
-            gap: 100px
-        }
-
-        .main-content {
-            flex: 2;
-        }
-
-        header {
-            background-color: #151515;
-            position: sticky;
-            top: 0;
-            z-index: 5;
-            width: 100%;
-            padding: 10px 0;
-        }
-
         .sidebar {
             position: sticky;
             top: 25px;
@@ -95,32 +49,29 @@
 
         .input-group-custom {
             max-width: 380px;
-            /* Atur sesuai kebutuhan */
         }
 
         .border-bottom {
             border: none;
-            /* Menghilangkan semua border */
             border-bottom: 1px solid #ccc;
-            /* Menambahkan border bawah */
             border-radius: 0;
-            /* Menghilangkan border-radius */
             width: 100%;
-            /* Membuat inputan memenuhi lebar parent */
         }
 
         .border-bottom:focus {
             box-shadow: none;
-            /* Menghilangkan shadow saat fokus */
             border-bottom: 1px solid #007bff;
-            /* Warna border saat fokus */
         }
 
         .input-grup {
             display: flex;
-            /* Flexbox untuk elemen dalam div ini */
             align-items: center;
-            /* Vertikal rata tengah */
+        }
+
+        #inputContainer {
+            display: none;
+            margin-top: 10px;
+            margin-left: 38px;
         }
     </style>
 </head>
@@ -140,19 +91,18 @@
                             class="fa-solid fa-chevron-left me-3"></i>back</a>
                 </div>
                 {{-- detail body --}}
-                <div class="card mt-4 p-4"
-                    style="width: 98%; background-color: transparent; border: 1px solid #FFFF">
+                <div class="card mt-4 p-4" style="width: 98%; background-color: transparent; border: 1px solid #FFFF">
                     <div class="d-flex justify-content-start align-items-center gap-2 text-white">
                         <img style="border-radius: 100px; object-fit: cover"
                             src="{{ Storage::url($posts->user->gambar) }}" width="50px" height="50px" alt="">
                         <h3>{{ $posts->user->username }}</h3>
                     </div>
                     <div class="d-flex align-items-start mt-3 text-white">
-                        <div class="col-md-8">
+                        <div class="">
                             <h6 class="title flex-start">{{ $posts->user->deskripsi }}</h6>
                             <img src="{{ Storage::url($posts->gambar) }}" width="95%" alt="">
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <h4>komentar</h4>
                             @foreach ($comment as $c)
                                 <div class="d-flex align-items-center mb-2">
@@ -161,20 +111,24 @@
                                         alt="">
                                     <h6>{{ $c->user->username }}</h6>
                                 </div>
-                                <div>
-                                    <span class="me-5">{{ $c->komen }}</span>
-                                    <p>reply</p>
+                                <span class="me-5">{{ $c->komen }}</span>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center mb-2" style="width: 100%;">
+                                        <p class="me-5 mb-0">likes</p>
+                                        <p class="me-5 mb-0">hapus</p>
+                                        <button type="button" class="btn text-white" onclick="showReplyForm({{ $c->id }})">reply</button>
+                                    </div>
                                 </div>
-                                {{-- <div class="">
-                                    <h4>adits</h4>
-                                    <p>salken</p>
-                                </div> --}}
+                                <div id="replyForm-{{ $c->id }}" class="mb-4" style="display: none;">
+                                    <form action="{{ route('replies.store', $c->id) }}" method="POST" class="input-group">
+                                        @csrf
+                                        <div class="d-flex">
+                                            <input type="text" id="textInput-{{ $c->id }}" name="reply_text" class="form-control border-0" placeholder="Masukkan teks..." style="width: 250px;">
+                                            <button type="submit" class="btn text-white ml-2" style="width: 100px;">Submit</button>
+                                        </div>
+                                    </form>
+                                </div>
                             @endforeach
-                            {{-- @php
-                                foreach ($comment as $c) {
-                                    echo ($c->user->id);
-                                }
-                            @endphp --}}
                             <hr style="width: 65%">
                             <div class="d-flex align-items-center">
                                 <div class="d-flex">
@@ -207,6 +161,14 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
+    <script>
+        function showReplyForm(id) {
+            document.getElementById('replyForm-' + id).style.display = 'block';
+        }
+        document.getElementById("showButton").onclick = function() {
+            document.getElementById("inputContainer").style.display = "block";
+        };
     </script>
 </body>
 

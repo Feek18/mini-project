@@ -13,7 +13,7 @@ class Reply extends Model
         return $this->belongsTo(Post::class);
     }
     public function comment(){
-        return $this->belongsTo(Komen::class);
+        return $this->belongsTo(Komen::class, 'comment_id');
     }
     public function user(){
         return $this->belongsTo(User::class);

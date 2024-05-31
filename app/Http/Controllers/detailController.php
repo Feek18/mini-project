@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Komen;
 use Illuminate\Http\Request;
+use App\Models\Reply;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -15,13 +16,8 @@ class detailController extends Controller
         $posts = Post::find($id);
 
         $comments = $posts->comments()->latest()->get();
-        // $userComment = User::find($comments->id_user);
+    
         $user = User::all();
-        // $user = User::find($posts->user_id);
-        // echo($user);
-        // echo($comments);
-        // echo($userComment);
-        // echo($posts);
         return view('../pages/detailGambar', ['posts' => $posts, 'user' => $user, 'comment' => $comments, 'post_id' => $posts->id]);
     }
     public function store(Request $request){
@@ -38,6 +34,23 @@ class detailController extends Controller
         // Redirect kembali ke halaman detail dengan menampilkan postingan dan komentar baru
         return redirect()->route('detail', ['id' => $validateData['post_id']]);
         
+    }
+
+    public function storeReply(Request $request, $commentId)
+    {
+        $request->validate([
+            'komen' => 'required',
+            'idpost' => 'required|exists:posts,id',
+        ]);
+
+        Reply::create([
+            'komen' => $request->komen,
+            'idpost' => $request->idpost,
+            'idUser' => auth()->id(),
+            'comment_id' => $commentId,
+        ]);
+
+        return back();
     }
     
     
