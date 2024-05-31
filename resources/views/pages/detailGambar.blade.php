@@ -123,7 +123,7 @@
                                     <form action="{{ route('replies.store', $c->id) }}" method="POST" class="input-group">
                                         @csrf
                                         <div class="d-flex">
-                                            <input type="text" id="textInput-{{ $c->id }}" name="reply_text" class="form-control border-0" placeholder="Masukkan teks..." style="width: 250px;">
+                                            <input type="text" id="textInput-{{ $c->id }}" name="komen" id="komen" class="form-control border-0" placeholder="Masukkan teks..." style="width: 250px;">
                                             <button type="submit" class="btn text-white ml-2" style="width: 100px;">Submit</button>
                                         </div>
                                     </form>
