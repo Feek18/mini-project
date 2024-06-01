@@ -29,7 +29,7 @@
             width: auto;
             min-height: 100vh;
             display: flex;
-            gap: 24px;
+            gap: 350px;
         }
 
         .row {
