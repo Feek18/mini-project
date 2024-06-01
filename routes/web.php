@@ -4,6 +4,7 @@ use App\Http\Controllers\daftarController;
 use App\Http\Controllers\detailController;
 use App\Http\Controllers\followController;
 use App\Http\Controllers\fungsiPostingController;
+use App\Http\Controllers\homeController;
 use App\Http\Controllers\profileController;
 use App\Models\Post;
 use App\Models\User;
@@ -20,12 +21,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('index', [
-        'post' => Post::orderBy('created_at', 'desc')->get(),
-        'user' => User::all(),
-    ]);
-})->name('index');
+Route::get('/', [homeController::class, 'index'])->name('index');
 
 // regis
 Route::get('/regis', [daftarController::class, 'registration'])->name('regis');

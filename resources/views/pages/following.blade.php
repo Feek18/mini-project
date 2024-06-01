@@ -85,16 +85,20 @@
                         </div>
                         <div class="mt-5">
                             <h4 class="text-white">List All Followings</h4>
-                            <div class="d-flex align-items-center text-white gap-4 mt-2 p-2">
-                                <img style="border-radius: 100px;"
-                                    src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?q=80&w=1985&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                                    width="50px" height="50px" alt="Profile Picture">
-                                <div>
-                                    <h5 class="mb-0">arhandev</h5>
-                                    <p class="mb-0">Farhan Abdull Hamid</p>
-                                </div>
-                                <a href="" class="btn btn-outline-light btn-sm">Unfollow</a>
-                            </div>
+                            @forelse ($recommendations as $r)
+                                <li class="d-flex align-items-center mb-3 gap-3">
+                                    <img src="{{ Storage::url($r->gambar) }}" alt="user" class="rounded-circle me-2"
+                                        style="width: 50px; height: 50px; object-fit: cover;">
+                                    <div>
+                                        <strong class="text-white">{{ $r->username }}</strong><br>
+                                        <small class="text-white me-5">{{ $r->nama }}</small>
+                                    </div>
+                                    <button class="btn btn-primary btn-sm ms-auto follow-btn"
+                                        data-user-id="{{ $r->id }}">Follow</button>
+                                </li>
+                            @empty
+                                <li>Anda telah memfollow semua orang</li>
+                            @endforelse
                         </div>
                     </div>
                 </div>

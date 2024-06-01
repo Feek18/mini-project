@@ -24,8 +24,17 @@ class User extends Authenticatable
     public function comment(){
         return $this->hasMany(Komen::class);
     }
-    public function follower(){
-        return $this->hasMany(Follower::class);
+    public function followers(){
+        return $this->hasMany(Follower::class, 'id_follow', 'id');
+    }
+    public function following()
+    {
+        return $this->hasMany(Follower::class, 'user', 'id');
+    }
+
+    public function isFollowing($userId)
+    {
+        return $this->following()->where('id_follow', $userId)->exists();
     }
     public function favorite(){
         return $this->hasMany(Favorite::class);

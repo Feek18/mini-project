@@ -15,7 +15,7 @@ class followController extends Controller
         $user_id = Auth::user()->id;
 
         // Mendapatkan daftar pengguna yang diikuti oleh user yang sedang login
-        $following_ids = Follower::where('userFollow_id', $user_id)->pluck('id_follow');
+        $following_ids = Follower::where('user', $user_id)->pluck('id_follow');
 
         // Mendapatkan postingan dari pengguna yang diikuti
         $posts = Post::whereIn('user_id', $following_ids)
