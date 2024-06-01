@@ -59,6 +59,6 @@ Route::get('/notifikasi', [profileController::class, 'notify'])->name('notify');
 Route::get('/posting', [profileController::class, 'posting'])->name('posting');
 Route::post('/form-data', [profileController::class, 'store'])->name('formData');
 // reply
-Route::post('/comments/{comment}/replies', [detailController::class, 'storeReply'])->name('replies.store');
+Route::post('/comments/{id}/replies', [detailController::class, 'storeReply'])->name('replies.store');
 // like
 Route::post('/post/{id}/like', [fungsiPostingController::class, 'likePost'])->name('like');

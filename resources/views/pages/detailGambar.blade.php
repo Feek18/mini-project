@@ -116,19 +116,33 @@
                                     <div class="d-flex align-items-center mb-2" style="width: 100%;">
                                         <p class="me-5 mb-0">likes</p>
                                         <p class="me-5 mb-0">hapus</p>
-                                        <button type="button" class="btn text-white" onclick="showReplyForm({{ $c->id }})">reply</button>
+                                        <button type="button" class="btn text-white"
+                                            onclick="showReplyForm({{ $c->id }})">reply</button>
                                     </div>
                                 </div>
+                                @foreach ($c->replies as $i)
+                                    <div class="ms-4">
+                                        <img src="{{ Storage::url($i->user->gambar) }}" alt="" width="30px"
+                                            height="30px" style="border-radius: 100px; object-fit: cover">
+                                        <h6>{{ $i->user->username }}</h6>
+                                        <span>{{ $i->komen }}</span>
+                                    </div>
+                                @endforeach
                                 <div id="replyForm-{{ $c->id }}" class="mb-4" style="display: none;">
-                                    <form action="{{ route('replies.store', $c->id) }}" method="POST" class="input-group">
+                                    <form action="{{ route('replies.store', $c->id) }}" method="POST"
+                                        class="input-group">
                                         @csrf
+                                        <input type="hidden" name="idpost" value="{{ $posts->id }}">
                                         <div class="d-flex">
-                                            <input type="text" id="textInput-{{ $c->id }}" name="komen" id="komen" class="form-control border-0" placeholder="Masukkan teks..." style="width: 250px;">
-                                            <button type="submit" class="btn text-white ml-2" style="width: 100px;">Submit</button>
+                                            <input type="text" name="komen" class="form-control border-0"
+                                                placeholder="Masukkan teks..." style="width: 250px;">
+                                            <button type="submit" class="btn text-white ml-2"
+                                                style="width: 100px;">Submit</button>
                                         </div>
                                     </form>
                                 </div>
                             @endforeach
+
                             <hr style="width: 65%">
                             <div class="d-flex align-items-center">
                                 <div class="d-flex">

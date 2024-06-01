@@ -12,11 +12,8 @@ use Illuminate\Support\Facades\Auth;
 class detailController extends Controller
 {
     public function detailGambar(Request $request, $id){
-        // $posts = Post::with('user', 'comments.user')->findOrFail($id);
         $posts = Post::find($id);
-
         $comments = $posts->comments()->latest()->get();
-    
         $user = User::all();
         return view('../pages/detailGambar', ['posts' => $posts, 'user' => $user, 'comment' => $comments, 'post_id' => $posts->id]);
     }
@@ -37,19 +34,22 @@ class detailController extends Controller
     }
 
     public function storeReply(Request $request, $commentId)
-    {
+    {   
         $request->validate([
             'komen' => 'required',
             'idpost' => 'required|exists:posts,id',
         ]);
 
-        Reply::create([
-            'komen' => $request->komen,
-            'idpost' => $request->idpost,
+        $komen = Komen::find($commentId);
+
+        $reply = Reply::create([
             'idUser' => auth()->id(),
+            'idpost' => $komen->post_id,
             'comment_id' => $commentId,
+            'komen' => $request->komen,
         ]);
 
+        // echo($reply);
         return back();
     }
     
