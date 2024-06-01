@@ -32,7 +32,7 @@
         .wrapper {
             width: 100%;
             display: flex;
-            gap: 100px;
+            gap: 380px;
         }
 
         .row {

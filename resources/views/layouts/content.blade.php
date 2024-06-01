@@ -63,9 +63,9 @@
                                     <small>{{ $f->nama }}</small>
                                 </div>
                                 @auth
-                                    <button class="btn btn-primary btn-sm ms-auto follow-btn" data-user-id="{{ $f->id }}">Follow</button>
+                                    <button class="btn btn-warning btn-sm ms-auto follow-btn" data-user-id="{{ $f->id }}">Follow</button>
                                 @else
-                                    <button class="btn btn-primary btn-sm ms-auto"><a href="{{ route('login') }}" class="text-decoration-none text-white">Follow</a></button>
+                                    <button class="btn btn-warning btn-sm ms-auto"><a href="{{ route('login') }}" class="text-decoration-none text-white">Follow</a></button>
                                 @endauth
                             </li>
                         @empty

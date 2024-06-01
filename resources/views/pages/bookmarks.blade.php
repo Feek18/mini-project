@@ -28,16 +28,15 @@
         }
 
         .wrapper {
-            /* width: 900px; */
             display: flex;
-            gap: 55px;
+            gap: 330px;
         }
 
-        .sidebar {
+        /* .sidebar {
             position: sticky;
             top: 25px;
             z-index: 5;
-        }
+        } */
 
         .bookmark-grid {
             display: grid;

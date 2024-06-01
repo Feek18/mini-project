@@ -29,6 +29,7 @@
 
         .wrapper {
             display: flex;
+            gap: 340px;
         }
 
         .sidebar {

@@ -30,7 +30,7 @@
         .wrapper {
             width: auto;
             display: flex;
-            gap: 380px;
+            gap: 650px;
         }
 
         .content {
