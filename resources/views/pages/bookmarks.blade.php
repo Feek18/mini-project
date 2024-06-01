@@ -69,7 +69,7 @@
                 <h2 class="text-white">Semua Bookmarks</h2>
                 <div class="card-head">
                     @if ($bookmarks->isEmpty())
-                        <p>Tidak ada hasil bookmark.</p>
+                        <p class="text-white mt-4">Tidak ada hasil bookmark.</p>
                     @else
                         <div class="bookmark-grid">
                             @foreach ($bookmarks as $bookmark)

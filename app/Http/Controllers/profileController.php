@@ -6,6 +6,7 @@ use App\Models\Follower;
 use App\Models\Komen;
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Like;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -24,8 +25,19 @@ class profileController extends Controller
         return view('../pages/ediprofile');
     }
 
-    public function notify(Request $request){
-        return view('../pages/notifikasi');
+    // public function notify(Request $request){
+    //     return view('../pages/notifikasi');
+    // }
+    public function notif()
+    {
+        $user_id = Auth::user()->id;
+        $post = Post::all();
+        $user = User::all();
+        $follow = Follower::where('user', $user_id)->get();
+        $like = Like::where('Userid', 2)->get();
+        $comment = Komen::where('id_user', $user_id)->get();
+
+        return view('pages.notifikasi', compact('follow', 'like', 'post', 'user', 'comment'));
     }
 
     public function posting(Request $request){

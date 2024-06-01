@@ -56,10 +56,24 @@
                     <div class="w-100 mt-4 text-white" style="max-width: 500px;">
                         <h4>Semua Notifikasi</h4>
                         <div class="d-flex align-items-center gap-4 mt-3">
-                            <img style="border-radius: 100px"
-                            src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?q=80&w=1985&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                            width="50px" height="50px" alt="">
-                            <h5>imronrev telah mengikuti anda</h5>
+                            @forelse ($like as $f)
+                                <li class="d-flex align-items-center mb-3">
+                                    {{-- <img src="https://via.placeholder.com/50" alt="user" class="rounded-circle me-2"> --}}
+                                    @if ($f->post->user->foto)
+                                        <img src="{{ $f->post->user->foto }}" alt="user" class="rounded-circle me-2"
+                                            style="width: 50px; height: 50px;">
+                                    @else
+                                        <img src="https://via.placeholder.com/50" alt="Profile Image"
+                                            class="rounded-circle me-2" style="object-fit: cover; cursor: pointer;">
+                                    @endif
+                                    <div class="gap-5">
+                                        <strong>{{ $f->post->user->username }}</strong>
+                                        <small>menyukai postingan anda</small>
+                                    </div>
+                                </li>
+                            @empty
+                                <p>Anda Tidak Memiliki Notifikasi</p>
+                            @endforelse
                         </div>
                     </div>
                 </div>

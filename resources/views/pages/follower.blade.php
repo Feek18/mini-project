@@ -84,21 +84,47 @@
                             </div>
                         </div>
                         <div class="mt-5">
-                            <h4 class="text-white">List All Followings</h4>
-                            @forelse ($following as $r)
-                                <li class="d-flex align-items-center mb-3 gap-3">
-                                    <img src="{{ Storage::url($r->gambar) }}" alt="user" class="rounded-circle me-2"
-                                        style="width: 50px; height: 50px; object-fit: cover;">
-                                    <div>
-                                        <strong class="text-white">{{ $r->username }}</strong><br>
-                                        <small class="text-white me-5">{{ $r->nama }}</small>
-                                    </div>
-                                    <button class="btn btn-danger btn-sm ms-auto unfollow-btn"
-                                        data-user-id="{{ $r->id }}">Unfollow</button>
-                                </li>
-                            @empty
-                                <span class="text-white">Anda belum mengikuti siapa pun</span>
-                            @endforelse
+                            <h4 class="text-white">List All Followers</h4>
+                            @if (request()->has('search'))
+                                @forelse ($followers as $f)
+                                    <li class="d-flex align-items-center mb-3">
+                                        @if (asset($f->foto))
+                                            <img src="{{ asset($f->gambar) }}" alt="user" class="rounded-circle me-2"
+                                                style="width: 80px; height: 80px; object-fit: cover">
+                                        @else
+                                            <img src="https://via.placeholder.com/80" alt="Profile Image"
+                                                id="profileImg" class="rounded-circle me-2"
+                                                style="object-fit: cover; cursor: pointer;">
+                                        @endif
+                                        <div class="text-white">
+                                            <strong>{{ $f->username }}</strong><br>
+                                            <small>{{ $f->nama }}</small>
+                                        </div>
+                                    </li>
+                                @empty
+                                    <p class="text-secondary mt-4">Tidak ada hasil yang ditemukan untuk
+                                        "{{ request()->get('search') }}"</p>
+                                @endforelse
+                            @else
+                                @forelse ($followers as $f)
+                                    <li class="d-flex align-items-center mb-3">
+                                        @if (asset($f->gambar))
+                                            <img src="{{ Storage::url($f->gambar) }}" alt="user" class="rounded-circle me-4"
+                                                style="width: 80px; height: 80px; object-fit: cover">
+                                        @else
+                                            <img src="https://via.placeholder.com/80" alt="Profile Image"
+                                                id="profileImg" class="rounded-circle me-2"
+                                                style="object-fit: cover; cursor: pointer;">
+                                        @endif
+                                        <div class="text-white">
+                                            <strong>{{ $f->username }}</strong><br>
+                                            <small>{{ $f->nama }}</small>
+                                        </div>
+                                    </li>
+                                @empty
+                                    <p>tidak ada follower</p>
+                                @endforelse
+                            @endif
                         </div>
                     </div>
                 </div>

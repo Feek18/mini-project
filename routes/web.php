@@ -58,7 +58,7 @@ Route::delete('/unfollow/{id}', [followController::class, 'unfollow'])->name('un
 
 
 // notify
-Route::get('/notifikasi', [profileController::class, 'notify'])->name('notify');
+Route::get('/myNotifikasi', [profileController::class, 'notif'])->name('notify');
 // posting
 Route::get('/posting', [profileController::class, 'posting'])->name('posting');
 Route::post('/form-data', [profileController::class, 'store'])->name('formData');
