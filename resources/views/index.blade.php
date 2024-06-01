@@ -90,6 +90,10 @@
             width: 100%;
             height: 150px;
         }
+
+        .bookmark-btn.bookmarked {
+            color: blue;
+        }
     </style>
 </head>
 
@@ -122,34 +126,37 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.bookmark-btn').forEach(function(button) {
-            button.addEventListener('click', function() {
-                let postId = this.getAttribute('data-post-id');
-                let button = this;
-    
-                $.ajax({
-                    type: 'POST',
-                    url: '/bookmark-post', // Ganti dengan URL yang sesuai dengan tujuan Anda
-                    data: {
-                        _token: '{{ csrf_token() }}', // Menambahkan token CSRF untuk keamanan
-                        id_post: postId
-                    },
-                    success: function(response) {
-                        if (response.bookmarked) {
-                            button.classList.add('bookmarked');
-                        } else {
-                            button.classList.remove('bookmarked');
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.bookmark-btn').forEach(function(button) {
+                button.addEventListener('click', function() {
+                    let postId = this.getAttribute('data-post-id');
+                    let button = this;
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/bookmark-detail',
+                        data: {
+                            _token: '{{ csrf_token() }}', // Menambahkan token CSRF untuk keamanan
+                            id_post: postId
+                        },
+                        success: function(response) {
+                            if (response.bookmarked) {
+                                button.classList.add('bookmarked');
+                            } else {
+                                button.classList.remove('bookmarked');
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Gagal mengirim data.', xhr, status, error);
                         }
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Gagal mengirim data.');
-                    }
+                    });
                 });
             });
         });
-    });
-    
+    </script>
+
+
 </body>
 
 </html>

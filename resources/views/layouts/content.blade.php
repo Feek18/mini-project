@@ -36,9 +36,7 @@
                                                     <span>comments</span>
                                                 </div>
                                             </div>
-                                            {{-- <i class="fa-regular fa-bookmark"></i> --}}
-                                            <i class="fa-regular fa-bookmark fa-lg bookmark-btn {{ $i->isBookmarkedByUser() ? 'bookmarked' : '' }}"
-                                                data-post-id="{{ $i->id }}" style="cursor: pointer;"></i>
+                                            <i class="fa-regular fa-bookmark bookmark-btn {{ $i->isBookmarkedByUser() ? 'bookmarked' : '' }}" data-post-id="{{ $i->id }}" style="cursor: pointer;"></i>
                                         </div>
                                     </div>
                                 </div>

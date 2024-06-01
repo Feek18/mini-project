@@ -38,6 +38,22 @@
             top: 25px;
             z-index: 5;
         }
+        .bookmark-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+
+        .bookmark-card {
+            width: 100%;
+            /* Memastikan kartu menggunakan lebar penuh dari kolom grid */
+        }
+
+        .bookmark-card img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
     </style>
 </head>
 
@@ -51,25 +67,29 @@
                 {{-- bookmark --}}
                 <h2 class="text-white">Semua Bookmarks</h2>
                 <div class="card-head">
-                    <div class="card p-3 mt-3" style="width: 300px">
-                        <!-- bookmarks.blade.php -->
-                        @foreach ($bookmarks as $bookmark)
-                            <div class="d-flex align-items-center gap-4 mt-3">
-                                <img src="{{ $bookmark->post->user->gambar }}"
-                                    style="width: 50px; height: 50px; object-fit: cover; border-radius: 150px;"
-                                    alt="">
-                                <div>
-                                    <h4>{{ $bookmark->post->user->username }}</h4>
-                                    <span>{{ \Carbon\Carbon::parse($bookmark->created_at)->diffForHumans() }}</span>
+                    @if ($bookmarks->isEmpty())
+                        <p>Tidak ada hasil bookmark.</p>
+                    @else
+                        <div class="bookmark-grid">
+                            @foreach ($bookmarks as $bookmark)
+                                <div class="card p-3 mt-3 bookmark-card">
+                                    <div class="d-flex align-items-center gap-4 mt-3">
+                                        <img src="{{ Storage::url($bookmark->user->gambar) }}"
+                                            style="width: 50px; height: 50px; object-fit: cover; border-radius: 150px;"
+                                            alt="">
+                                        <div>
+                                            <h4>{{ $bookmark->post->user->username }}</h4>
+                                            <span>{{ \Carbon\Carbon::parse($bookmark->created_at)->diffForHumans() }}</span>
+                                        </div>
+                                    </div>
+                                    <img class="mt-3" src="{{ Storage::url($bookmark->post->gambar) }}"
+                                        style="width: 100%; height: auto;" alt="">
                                 </div>
-                            </div>
-                            <img class="mt-3" src="{{ Storage::url($bookmark->post->gambar) }}" style="width: 265px"
-                                alt="">
-                        @endforeach
-                    </div>
+                            @endforeach
+                        </div>
+                    @endif
                 </div>
             </div>
-
         </div>
     </section>
 

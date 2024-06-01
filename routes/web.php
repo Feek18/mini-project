@@ -39,8 +39,8 @@ Route::post('/detail-data', [detailController::class, 'store'])->name('komen-dat
 // explore
 Route::get('/explore', [detailController::class, 'explore'])->name('explore');
 // bookmark
-Route::get('/bookmark', [fungsiPostingController::class, 'bookmark'])->name('bookmark');
-Route::post('/bookmark', [fungsiPostingController::class, 'bookmarkPost'])->name('bookmark.post');
+Route::get('/bookmarks', [fungsiPostingController::class, 'bookmark'])->name('bookmark');
+Route::post('/bookmark-detail', [fungsiPostingController::class, 'bookmarkPost'])->name('bookmark.post');
 
 // profil
 Route::get('/profile', [profileController::class, 'profil'])->name('profil');
