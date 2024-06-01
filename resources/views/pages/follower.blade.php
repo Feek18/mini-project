@@ -60,7 +60,6 @@
                                 class="fa-solid fa-chevron-left me-3"></i>back</a>
                     </div>
                     <div class="d-flex flex-column align-items-center text-white mt-3" style="width: 1100px">
-                        <h2>reezyx</h2>
                         <div class="d-flex align-items-center gap-4 mt-2">
                             <a class="nav-link" href="{{ route('see_followers', Auth::user()->id) }}">Followers</a>
                             <a class="nav-link" href="{{ route('see_followings', Auth::user()->id) }}">Followings</a>
