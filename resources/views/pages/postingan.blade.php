@@ -105,6 +105,31 @@
             outline: none;
             box-shadow: none;
         }
+
+        .input-custom {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .input-custom input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            z-index: 2;
+            cursor: pointer;
+        }
+
+        .input-custom img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
     </style>
 </head>
 
@@ -133,11 +158,12 @@
                                 <input class="custom-input form-control @error('deskripsi') is-invalid @enderror"
                                     type="text" placeholder="Deskripsi postingan" id="deskripsi" name="deskripsi"
                                     value="{{ old('deskripsi') }}">
-                                <div class="input-custom mt-2">
+                                <div class="input-custom mt-2 position-relative">
                                     <span>Pilih Gambar</span>
                                     <input class="@error('gambar') is-invalid @enderror" type="file" id="gambar"
-                                        name="gambar" onchange="showFileName()">
-                                    <span id="file-name" class="text-white"></span>
+                                        name="gambar" accept="image/*" onchange="showImagePreview(event)">
+                                    <img id="image-preview" class="position-absolute"
+                                        style="display: none; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1;">
                                 </div>
                                 <hr class="text-white">
                                 <div class="d-flex justify-content-end">
@@ -159,10 +185,18 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
     <script>
-        function showFileName() {
-            var fileInput = document.getElementById('gambar');
-            var fileName = fileInput.files[0].name;
-            document.getElementById('file-name').textContent = fileName;
+        function showImagePreview(event) {
+            var fileInput = event.target;
+            var file = fileInput.files[0];
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                var preview = document.getElementById('image-preview');
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            };
+
+            reader.readAsDataURL(file);
         }
     </script>
 </body>
