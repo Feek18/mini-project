@@ -26,10 +26,9 @@ class homeController extends Controller
 
         $user = User::all();
 
-        // return view('index', ['post' => $posts, 'user' =>$user]);
         if ($user_id) {
             // Mendapatkan daftar pengguna yang diikuti oleh user yang sedang login
-            $following = Follower::where('user', $user_id)->pluck('id_follow');
+            $following = Follower::where('id_follow', $user_id)->pluck('id_follow');
 
             // Mendapatkan daftar rekomendasi pengguna yang belum diikuti dan bukan user yang sedang login
             $recommendations = User::where('id', '!=', $user_id)
@@ -42,12 +41,6 @@ class homeController extends Controller
         }
 
         return view('index', ['post' => $posts, 'user' => $user, 'follow' => $recommendations]);
-        // $posts = Post::orderBy('created_at', 'desc')->get();
-        // $users = User::all();
-        
-        // return view('index', [
-        //     'post' => $posts,
-        //     'user' => $users,
-        // ]);
+
     }
 }

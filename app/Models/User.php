@@ -18,7 +18,8 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $guarded = ['id'];
-    public function post(){
+    public function posts()
+    {
         return $this->hasMany(Post::class);
     }
     public function comment(){
@@ -36,8 +37,9 @@ class User extends Authenticatable
     {
         return $this->following()->where('id_follow', $userId)->exists();
     }
-    public function favorite(){
-        return $this->hasMany(Favorite::class);
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class, 'iduser');
     }
     public function like(){
         return $this->hasMany(Like::class);

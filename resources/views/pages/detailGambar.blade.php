@@ -14,6 +14,9 @@
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
         * {
             box-sizing: border-box
@@ -24,7 +27,7 @@
             margin: 0;
             padding: 0;
             background-color: #151515;
-            overflow-x: hidden;
+            /* overflow-x: hidden; */
         }
 
         .wrapper {
@@ -94,27 +97,65 @@
                 <div class="card mt-4 p-4" style="width: 98%; background-color: transparent; border: 1px solid #FFFF">
                     <div class="d-flex justify-content-start align-items-center gap-2 text-white">
                         <img style="border-radius: 100px; object-fit: cover"
-                            src="{{ Storage::url($posts->user->gambar) }}" width="50px" height="50px" alt="">
-                        <h3>{{ $posts->user->username }}</h3>
+                            src="{{ Storage::url($post->user->gambar) }}" width="50px" height="50px" alt="">
+                        <h3>{{ $post->user->username }}</h3>
                     </div>
                     <div class="d-flex align-items-start mt-3 text-white">
                         <div class="">
-                            <h6 class="title flex-start">{{ $posts->user->deskripsi }}</h6>
-                            <img src="{{ Storage::url($posts->gambar) }}" width="95%" alt="">
+                            <h6 class="title flex-start text-white">{{ $post->user->deskripsi }}</h6>
+                            <img src="{{ Storage::url($post->gambar) }}" width="95%" alt="">
                         </div>
                         <div class="col-md-4">
                             <h4>komentar</h4>
-                            @foreach ($comment as $c)
+                            @foreach ($comments as $c)
                                 <div class="d-flex align-items-center mb-2">
                                     <img class="me-3" style="border-radius: 100px; object-fit: cover"
                                         src="{{ Storage::url($c->user->gambar) }}" width="50px" height="50px"
                                         alt="">
                                     <h6>{{ $c->user->username }}</h6>
                                 </div>
-                                <span class="me-5">{{ $c->komen }}</span>
+
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="d-flex align-items-center mb-2" style="width: 100%;">
-                                        <p class="me-5 mb-0">likes</p>
+                                        {{-- {{ dd($posts) }} --}}
+                                        @if ($post->count() > 0)
+                                            {{-- @foreach ($post as $p) --}}
+                                            {{-- @if ($p) --}}
+                                            <!-- Memeriksa apakah $post adalah objek yang valid -->
+                                            <div class="post">
+                                                <form action="/like_komen" method="POST" id="formLike">
+                                                    @csrf
+                                                    <div>
+                                                        <input type="hidden" name="id" value="{{ $post->id }}">
+                                                        <input id="commentid" name="id_comment" type="hidden" value="{{ $c->id }}">
+                                                        <span class="me-5">{{ $c->komen }}</span>
+                                                    </div>
+                                                    <div>
+                                                        <input id="userid" name="Userid" type="hidden" value="{{ Auth::user()->id }}">
+                                                        <i id="clickLike" class="fa-solid fa-heart me-3"></i>
+                                                        <p class="me-5 mb-0">{{ $likes_komen->count() }} likes</p>
+                                                    </div>
+                                                </form>
+                                                {{-- @php
+                                                            $liked = $p->likes->where('userid', Auth::id())->first();
+                                                        @endphp
+                                                        @if ($liked)
+                                                            <button class="btn btn-danger btn-sm unlike-btn"
+                                                                data-post-id="{{ $p->id }}">
+                                                                Unlike
+                                                            </button>
+                                                        @else
+                                                            <button class="btn btn-primary btn-sm like-btn"
+                                                                data-post-id="{{ $p->id }}">
+                                                                Like
+                                                            </button>
+                                                        @endif --}}
+                                            </div>
+                                            {{-- @endif --}}
+                                            {{-- @endforeach --}}
+                                        @else
+                                            <p>No posts found.</p>
+                                        @endif
                                         <p class="me-5 mb-0">hapus</p>
                                         <button type="button" class="btn text-white"
                                             onclick="showReplyForm({{ $c->id }})">reply</button>
@@ -132,7 +173,7 @@
                                     <form action="{{ route('replies.store', $c->id) }}" method="POST"
                                         class="input-group">
                                         @csrf
-                                        <input type="hidden" name="idpost" value="{{ $posts->id }}">
+                                        <input type="hidden" name="idpost" value="{{ $post->id }}">
                                         <div class="d-flex">
                                             <input type="text" name="komen" class="form-control border-0"
                                                 placeholder="Masukkan teks..." style="width: 250px;">
@@ -157,7 +198,7 @@
                                     enctype="multipart/form-data">
                                     @csrf
                                     <div class="input-grup">
-                                        <input type="hidden" name="post_id" value="{{ $post_id }}">
+                                        <input type="hidden" name="post_id" value="{{ $post->id }}">
                                         <input type="text" class="form-control me-2"
                                             placeholder="Tulis komentar anda" name="komen" id="komen">
                                         <button class="btn text-white" type="submit">Kirim</button>
@@ -177,12 +218,78 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
     <script>
+        
+            let like = document.getElementById("clickLike");
+            console.log(like);
+            like.addEventListener('click', function() {
+                let userId = document.getElementById("userid").value;
+                let commentId = document.getElementById("commentid").value;
+                
+                console.log(like.classList)
+                if (like.classList.contains('liked')) {
+                    like.style.color = 'white';
+                    like.classList.remove('liked');
+                } else {
+                    like.style.color = 'red';
+                    like.classList.add('liked');
+                    document.getElementById('formLike').submit()
+                }
+            })
+        
+
         function showReplyForm(id) {
             document.getElementById('replyForm-' + id).style.display = 'block';
         }
         document.getElementById("showButton").onclick = function() {
             document.getElementById("inputContainer").style.display = "block";
         };
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.like-btn').forEach(function(button) {
+                button.addEventListener('click', function() {
+                    let postId = this.getAttribute('data-post-id');
+
+                    fetch(`/posts/${postId}/like`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                        }).then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                button.style.display = 'none';
+                                button.nextElementSibling.style.display = 'inline-block';
+                                let likesCount = button.closest('.post').querySelector(
+                                    '.me-5.mb-0');
+                                likesCount.textContent = parseInt(likesCount.textContent) + 1 +
+                                    ' likes';
+                            }
+                        });
+                });
+            });
+            document.querySelectorAll('.unlike-btn').forEach(function(button) {
+                button.addEventListener('click', function() {
+                    let postId = this.getAttribute('data-post-id');
+                    fetch(`/posts/${postId}/unlike`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                        }).then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                button.style.display = 'none';
+                                button.previousElementSibling.style.display = 'inline-block';
+                                let likesCount = button.closest('.post').querySelector(
+                                    '.me-5.mb-0');
+                                likesCount.textContent = parseInt(likesCount.textContent) - 1 +
+                                    ' likes';
+                            }
+                        });
+                });
+            });
+        });
     </script>
 </body>
 

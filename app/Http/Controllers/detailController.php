@@ -5,18 +5,39 @@ namespace App\Http\Controllers;
 use App\Models\Komen;
 use Illuminate\Http\Request;
 use App\Models\Reply;
+use App\Models\Follower;
 use App\Models\Post;
+use App\Models\Like_Komen;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class detailController extends Controller
 {
     public function detailGambar(Request $request, $id){
-        $posts = Post::find($id);
-        $comments = $posts->comments()->latest()->get();
-        $user = User::all();
-        return view('../pages/detailGambar', ['posts' => $posts, 'user' => $user, 'comment' => $comments, 'post_id' => $posts->id]);
-    }
+        // Temukan post dengan ID yang diberikan
+        $post = Post::find($id);
+    
+        // Periksa apakah post ditemukan
+        if (!$post) {
+            // Jika tidak, kembalikan respons 404 atau lakukan penanganan yang sesuai
+            return abort(404);
+        }
+        $likes_komen = Like_Komen::all();
+        // Ambil komentar terkait post, disusun dari yang terbaru
+        $comments = $post->comments()->latest()->get();
+    
+        // Ambil semua user (mungkin Anda hanya perlu mengambil user yang terkait dengan post atau komentar)
+        $users = User::all();
+    
+        // Kembalikan view bersama dengan data yang diperlukan
+        return view('../pages/detailGambar', [
+            'post' => $post,
+            'users' => $users,
+            'comments' => $comments,
+            'likes_komen' => $likes_komen
+        ]);
+    }    
+    
     public function store(Request $request){
         $validateData = $request->validate([
             'komen' => 'required',
@@ -55,7 +76,38 @@ class detailController extends Controller
     
     
 
-    public function explore(Request $request){
-        return view('../pages/explore');
+    public function explore(Request $request)
+    {
+        $user_id = Auth::check() ? Auth::user()->id : null;
+
+        if ($user_id) {
+            // Mendapatkan daftar pengguna yang diikuti oleh user yang sedang login
+            $following = Follower::where('user', $user_id)->pluck('id_follow');
+
+            // Mendapatkan daftar rekomendasi pengguna yang belum diikuti dan bukan user yang sedang login
+            $recommendations = User::where('id', '!=', $user_id)
+                                    ->whereNotIn('id', $following)
+                                    ->take(5)
+                                    ->get();
+        } else {
+            // Jika pengguna tidak login, rekomendasi kosong atau bisa disesuaikan sesuai kebutuhan
+            $recommendations = User::take(5)->get();
+        }
+        
+        // fitur search
+        $query = User::orderBy('created_at', 'desc');
+
+        if (request()->has('search')) {
+            # code...
+            $search = $request->get('search');
+            $query->where('username', 'like', '%' . request()->get('search') . '%');
+        }
+
+        $users = $query->get(); 
+    
+        return view('../pages/explore', compact('recommendations', 'users'));
     }
+
+
+
 }

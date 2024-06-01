@@ -13,6 +13,6 @@ class Like_Komen extends Model
         return $this->belongsTo(Komen::class);
     }
     public function user(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'Userid');
     }
 }

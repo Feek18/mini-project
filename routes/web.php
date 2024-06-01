@@ -5,6 +5,7 @@ use App\Http\Controllers\detailController;
 use App\Http\Controllers\followController;
 use App\Http\Controllers\fungsiPostingController;
 use App\Http\Controllers\homeController;
+use App\Http\Controllers\likes_komenController;
 use App\Http\Controllers\profileController;
 use App\Models\Post;
 use App\Models\User;
@@ -39,6 +40,7 @@ Route::post('/detail-data', [detailController::class, 'store'])->name('komen-dat
 Route::get('/explore', [detailController::class, 'explore'])->name('explore');
 // bookmark
 Route::get('/bookmark', [fungsiPostingController::class, 'bookmark'])->name('bookmark');
+Route::post('/bookmark', [fungsiPostingController::class, 'bookmarkPost'])->name('bookmark.post');
 
 // profil
 Route::get('/profile', [profileController::class, 'profil'])->name('profil');
@@ -57,4 +59,8 @@ Route::post('/form-data', [profileController::class, 'store'])->name('formData')
 // reply
 Route::post('/comments/{id}/replies', [detailController::class, 'storeReply'])->name('replies.store');
 // like
-Route::post('/post/{id}/like', [fungsiPostingController::class, 'likePost'])->name('like');
+Route::post('/posts/{post}/like', [fungsiPostingController::class, 'likePost'])->name('posts.like');
+Route::post('/posts/{post}/unlike', [fungsiPostingController::class, 'unlikePost'])->name('posts.unlike');
+// like-komen
+Route::post('/like_komen', [likes_komenController::class, 'likekomen']);
+Route::get('/like_komen', [likes_komenController::class, 'like'])->name('likekomen');

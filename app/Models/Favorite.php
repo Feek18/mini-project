@@ -9,10 +9,12 @@ class Favorite extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
-    public function post(){
-        return $this->belongsTo(Post::class);
+    public function post()
+    {
+        return $this->belongsTo(Post::class, 'id_post');
     }
-    public function user(){
-        return $this->belongsTo(User::class);
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'iduser');
     }
 }

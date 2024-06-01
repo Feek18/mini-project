@@ -52,16 +52,20 @@
                 <h2 class="text-white">Semua Bookmarks</h2>
                 <div class="card-head">
                     <div class="card p-3 mt-3" style="width: 300px">
-                        <div class="d-flex align-items-center gap-4">
-                            <img src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?q=80&w=1985&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                            style="width: 50px; height: 50px; object-fit: cover; border-radius: 150px;" alt="">
-                            <div>
-                                <h4>reezyx</h4>
-                                <span>1 day ago</span>
+                        <!-- bookmarks.blade.php -->
+                        @foreach ($bookmarks as $bookmark)
+                            <div class="d-flex align-items-center gap-4 mt-3">
+                                <img src="{{ $bookmark->post->user->gambar }}"
+                                    style="width: 50px; height: 50px; object-fit: cover; border-radius: 150px;"
+                                    alt="">
+                                <div>
+                                    <h4>{{ $bookmark->post->user->username }}</h4>
+                                    <span>{{ \Carbon\Carbon::parse($bookmark->created_at)->diffForHumans() }}</span>
+                                </div>
                             </div>
-                        </div>
-                        <img class="mt-3" src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=2043&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                        style="width: 265px" alt="">
+                            <img class="mt-3" src="{{ Storage::url($bookmark->post->gambar) }}" style="width: 265px"
+                                alt="">
+                        @endforeach
                     </div>
                 </div>
             </div>
