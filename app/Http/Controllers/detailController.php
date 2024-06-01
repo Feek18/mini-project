@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Reply;
 use App\Models\Follower;
 use App\Models\Post;
+use App\Models\Like;
 use App\Models\Like_Komen;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -108,6 +109,40 @@ class detailController extends Controller
         return view('../pages/explore', compact('recommendations', 'users'));
     }
 
+    public function likePost(Request $request)
+    {
+        $post_id = $request->postLike_id;
+        $user_id = auth()->id();
 
+        $like = Like::where('post', $post_id)->where('userid', $user_id)->first();
+
+        if ($like) {
+            // If already liked, unlike it
+            $like->delete();
+            $liked = false;
+        } else {
+            // If not liked, like it
+            Like::create([
+                'userid' => $user_id,
+                'post' => $post_id,
+            ]);
+            $liked = true;
+        }
+
+        return response()->json(['liked' => $liked]);
+    }
+
+    public function deleteReply($id)
+    {
+        $reply = Reply::findOrFail($id);
+
+        if (auth()->id() != $reply->idUser) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+
+        $reply->delete();
+
+        return response()->json(['success' => 'Reply deleted successfully']);
+    }
 
 }

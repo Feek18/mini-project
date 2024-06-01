@@ -13,10 +13,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
         * {
             box-sizing: border-box
@@ -117,48 +113,35 @@
 
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="d-flex align-items-center mb-2" style="width: 100%;">
-                                        {{-- {{ dd($posts) }} --}}
                                         @if ($post->count() > 0)
-                                            {{-- @foreach ($post as $p) --}}
-                                            {{-- @if ($p) --}}
-                                            <!-- Memeriksa apakah $post adalah objek yang valid -->
                                             <div class="post">
                                                 <form action="/like_komen" method="POST" id="formLike">
                                                     @csrf
-                                                    <div>
-                                                        <input type="hidden" name="id" value="{{ $post->id }}">
-                                                        <input id="commentid" name="id_comment" type="hidden" value="{{ $c->id }}">
-                                                        <span class="me-5">{{ $c->komen }}</span>
-                                                    </div>
-                                                    <div>
-                                                        <input id="userid" name="Userid" type="hidden" value="{{ Auth::user()->id }}">
-                                                        <i id="clickLike" class="fa-solid fa-heart me-3"></i>
+                                                    <input type="hidden" name="id" value="{{ $post->id }}">
+                                                    <input id="commentid" name="id_comment" type="hidden"
+                                                        value="{{ $c->id }}">
+                                                    <span class="me-5">{{ $c->komen }}</span>
+                                                    <div class="d-flex align-items-center">
+                                                        <input id="userid" name="Userid" type="hidden"
+                                                            value="{{ Auth::user()->id }}">
+                                                        <i id="clickLike" class="fa-solid fa-heart me-2"></i>
                                                         <p class="me-5 mb-0">{{ $likes_komen->count() }} likes</p>
+                                                        @auth
+                                                            @if (auth()->id() == $c->user->id)
+                                                                <span
+                                                                    class="ms-3 comment-actions text-danger delete-comment"
+                                                                    data-comment-id="{{ $c->id }}"
+                                                                    style="cursor: pointer">Hapus</span>
+                                                            @endif
+                                                            <button type="button" class="btn text-white"
+                                                                onclick="showReplyForm({{ $c->id }})">reply</button>
+                                                        @endauth
                                                     </div>
                                                 </form>
-                                                {{-- @php
-                                                            $liked = $p->likes->where('userid', Auth::id())->first();
-                                                        @endphp
-                                                        @if ($liked)
-                                                            <button class="btn btn-danger btn-sm unlike-btn"
-                                                                data-post-id="{{ $p->id }}">
-                                                                Unlike
-                                                            </button>
-                                                        @else
-                                                            <button class="btn btn-primary btn-sm like-btn"
-                                                                data-post-id="{{ $p->id }}">
-                                                                Like
-                                                            </button>
-                                                        @endif --}}
                                             </div>
-                                            {{-- @endif --}}
-                                            {{-- @endforeach --}}
                                         @else
                                             <p>No posts found.</p>
                                         @endif
-                                        <p class="me-5 mb-0">hapus</p>
-                                        <button type="button" class="btn text-white"
-                                            onclick="showReplyForm({{ $c->id }})">reply</button>
                                     </div>
                                 </div>
                                 @foreach ($c->replies as $i)
@@ -167,6 +150,15 @@
                                             height="30px" style="border-radius: 100px; object-fit: cover">
                                         <h6>{{ $i->user->username }}</h6>
                                         <span>{{ $i->komen }}</span>
+                                        <div class="d-flex align-items-center">
+                                            @auth
+                                                @if (auth()->id() == $i->user->id)
+                                                    <span class="ms-3 comment-actions text-danger delete-reply"
+                                                        data-reply-id="{{ $i->id }}"
+                                                        style="cursor: pointer">Hapus</span>
+                                                @endif
+                                            @endauth
+                                        </div>
                                     </div>
                                 @endforeach
                                 <div id="replyForm-{{ $c->id }}" class="mb-4" style="display: none;">
@@ -186,12 +178,17 @@
 
                             <hr style="width: 65%">
                             <div class="d-flex align-items-center">
-                                <div class="d-flex">
-                                    <i class="fa-regular fa-heart me-3"></i>
+                                <div class="d-flex align-items-center">
+                                    <i class="fa-solid fa-heart like-btn me-2 {{ $post->isLikedByUser() ? 'liked' : '' }}"
+                                        data-post-id="{{ $post->id }}" style="cursor: pointer;"></i>
+                                    <span class="me-3">{{ $post->likes->count() }} Likes</span>
                                     <i class="fa-regular fa-comment me-3"></i>
                                     <i class="fa-regular fa-paper-plane me-5"></i>
                                 </div>
-                                <i class="fa-regular fa-bookmark"></i>
+                                <div class="d-flex justify-content-end">
+                                    <i class="fa-regular fa-bookmark bookmark-btn {{ $post->isBookmarkedByUser() ? 'bookmarked' : '' }}"
+                                        data-post-id="{{ $post->id }}" style="cursor: pointer;"></i>
+                                </div>
                             </div>
                             <div class="mt-4">
                                 <form class="input-group-custom" action="{{ route('komen-data') }}" method="POST"
@@ -217,25 +214,135 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        
-            let like = document.getElementById("clickLike");
-            console.log(like);
-            like.addEventListener('click', function() {
-                let userId = document.getElementById("userid").value;
-                let commentId = document.getElementById("commentid").value;
-                
-                console.log(like.classList)
-                if (like.classList.contains('liked')) {
-                    like.style.color = 'white';
-                    like.classList.remove('liked');
-                } else {
-                    like.style.color = 'red';
-                    like.classList.add('liked');
-                    document.getElementById('formLike').submit()
+        $('.delete-reply').click(function() {
+            var replyId = $(this).data('reply-id');
+            var replyElement = $('#reply-' + replyId);
+
+            $.ajax({
+                url: '/replies/' + replyId,
+                type: 'DELETE',
+                data: {
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    if (response.success) {
+                        replyElement.remove();
+                        alert('Berhasil menghapus balasan.');
+                    } else {
+                        alert('Gagal menghapus balasan.');
+                    }
+                },
+                error: function(response) {
+                    alert('Gagal menghapus balasan.');
                 }
-            })
-        
+            });
+        });
+
+        $('.delete-comment').click(function() {
+            var commentId = $(this).data('comment-id');
+            var commentElement = $('#comment-' + commentId);
+
+            $.ajax({
+                url: '/comments/' + commentId,
+                type: 'DELETE',
+                data: {
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    if (response.success) {
+                        commentElement.remove();
+                        alert('Berhasil menghapus komentar.');
+                    } else {
+                        alert('Gagal menghapus komentar.');
+                    }
+                },
+                error: function(response) {
+                    alert('Gagal menghapus komentar.');
+                }
+            });
+        });
+
+
+
+        $('.like-btn').on('click', function(event) {
+            event.stopPropagation();
+            let postId = $(this).data('post-id');
+            let icon = $(this);
+
+            $.ajax({
+                url: '{{ route('like.post') }}',
+                type: 'POST',
+                data: JSON.stringify({
+                    postLike_id: postId
+                }),
+                contentType: 'application/json',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                success: function(data) {
+                    if (data.liked) {
+                        icon.addClass('liked');
+                        icon.css('color', 'red');
+                    } else {
+                        icon.removeClass('liked');
+                        icon.css('color', '#fff');
+                    }
+                    location.reload();
+                },
+                error: function(error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.bookmark-btn').forEach(function(button) {
+                button.addEventListener('click', function() {
+                    let postId = this.getAttribute('data-post-id');
+                    let button = this;
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/bookmark-detail',
+                        data: {
+                            _token: '{{ csrf_token() }}', // Menambahkan token CSRF untuk keamanan
+                            id_post: postId
+                        },
+                        success: function(response) {
+                            if (response.bookmarked) {
+                                button.classList.add('bookmarked');
+                            } else {
+                                button.classList.remove('bookmarked');
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Gagal mengirim data.', xhr, status, error);
+                        }
+                    });
+                });
+            });
+        });
+
+        let like = document.getElementById("clickLike");
+        console.log(like);
+        like.addEventListener('click', function() {
+            let userId = document.getElementById("userid").value;
+            let commentId = document.getElementById("commentid").value;
+
+            console.log(like.classList)
+            if (like.classList.contains('liked')) {
+                like.style.color = 'white';
+                like.classList.remove('liked');
+            } else {
+                like.style.color = 'red';
+                like.classList.add('liked');
+                document.getElementById('formLike').submit()
+            }
+        })
+
 
         function showReplyForm(id) {
             document.getElementById('replyForm-' + id).style.display = 'block';

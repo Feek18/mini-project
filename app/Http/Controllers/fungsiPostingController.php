@@ -13,10 +13,11 @@ class fungsiPostingController extends Controller
 {
     public function bookmark()
     {
-        $user_id = Auth::user()->id;
-
+        // Mendapatkan pengguna yang sedang login
+        $user = Auth::user()->id;
+            
         // Retrieve the authenticated user's bookmarks with the related posts and users
-        $bookmarks = Favorite::where('iduser', $user_id)->with('post.user')->get();
+        $bookmarks = Favorite::where('iduser', $user)->with('post.user')->get();
 
         return view('pages.bookmarks', compact('bookmarks'));
     }

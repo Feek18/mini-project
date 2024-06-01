@@ -25,13 +25,21 @@ class User extends Authenticatable
     public function comment(){
         return $this->hasMany(Komen::class);
     }
-    public function followers(){
-        return $this->hasMany(Follower::class, 'id_follow', 'id');
+    // public function followers(){
+    //     return $this->hasMany(Follower::class, 'id_follow', 'id');
+    // }
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'followers', 'id_follow', 'user');
     }
     public function following()
     {
-        return $this->hasMany(Follower::class, 'user', 'id');
+        return $this->belongsToMany(User::class, 'followers', 'user', 'id_follow');
     }
+    // public function following()
+    // {
+    //     return $this->hasMany(Follower::class, 'user', 'id');
+    // }
 
     public function isFollowing($userId)
     {

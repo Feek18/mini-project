@@ -23,8 +23,12 @@ class Post extends Model
     {
         return $this->favorites()->where('iduser', auth()->id())->exists();
     }
+    public function isLikedByUser()
+    {
+        return $this->likes()->where('userid', auth()->id())->exists();
+    }
     public function comments(){
-        return $this->hasMany(Komen::class);
+        return $this->hasMany(Komen::class, 'post_id');
     }
     public function user()
     {

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Follower;
+use App\Models\Komen;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -13,7 +15,9 @@ class profileController extends Controller
     public function profil(Request $request){
         $user = User::where('id', Auth::user()->id)->first();
         $product = Post::all();
-        return view('../pages/profile', ['product' => $product, 'user' => $user]);
+        $following = Follower::all();
+        $follower = Follower::all();
+        return view('../pages/profile', ['product' => $product, 'user' => $user, 'following' => $following, 'follower' => $follower]);
     }
 
     public function ediProfil(Request $request){
@@ -85,6 +89,19 @@ class profileController extends Controller
     
         // echo($user);
         return redirect()->route('profil');
+    }
+
+    public function deleteComment($id)
+    {
+        $comment = Komen::findOrFail($id);
+
+        if (auth()->id() != $comment->id_user) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+
+        $comment->delete();
+
+        return response()->json(['success' => 'Comment deleted successfully']);
     }
 
 }

@@ -50,16 +50,23 @@
                     <div class="follow-body text-white">
                         <h2>Siapa yang harus diikuti</h2>
                         <p>Orang yang mungkin anda kenal</p>
-                        @forelse ($follow as $r)
-                            <li class="d-flex align-items-center mb-3 gap-3">
-                                <img src="{{ Storage::url($r->gambar) }}" alt="user" class="rounded-circle me-2"
-                                    style="width: 50px; height: 50px; object-fit: cover;">
+                        @forelse ($follow as $f)
+                            <li class="d-flex align-items-center mb-3">
+                                @if ($f->gambar)
+                                    <img src="{{ Storage::url($f->gambar) }}" alt="user" class="rounded-circle me-2" style="width: 50px; height: 50px; object-fit: cover">
+                                @else
+                                    <img src="https://via.placeholder.com/50" alt="Profile Image" class="rounded-circle me-2" style="object-fit: cover; cursor: pointer;">
+                                @endif
+                                
                                 <div>
-                                    <strong class="text-white">{{ $r->username }}</strong><br>
-                                    <small class="text-white me-5">{{ $r->nama }}</small>
+                                    <strong>{{ $f->username }}</strong><br>
+                                    <small>{{ $f->nama }}</small>
                                 </div>
-                                <button class="btn btn-primary btn-sm ms-auto follow-btn"
-                                    data-user-id="{{ $r->id }}">Follow</button>
+                                @auth
+                                    <button class="btn btn-primary btn-sm ms-auto follow-btn" data-user-id="{{ $f->id }}">Follow</button>
+                                @else
+                                    <button class="btn btn-primary btn-sm ms-auto"><a href="{{ route('login') }}" class="text-decoration-none text-white">Follow</a></button>
+                                @endauth
                             </li>
                         @empty
                             <li>Anda telah memfollow semua orang</li>

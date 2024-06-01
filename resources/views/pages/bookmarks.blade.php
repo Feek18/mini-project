@@ -38,14 +38,15 @@
             top: 25px;
             z-index: 5;
         }
+
         .bookmark-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 1rem;
+            gap: 4px;
         }
 
         .bookmark-card {
-            width: 100%;
+            width: 85%;
             /* Memastikan kartu menggunakan lebar penuh dari kolom grid */
         }
 
@@ -74,9 +75,11 @@
                             @foreach ($bookmarks as $bookmark)
                                 <div class="card p-3 mt-3 bookmark-card">
                                     <div class="d-flex align-items-center gap-4 mt-3">
-                                        <img src="{{ Storage::url($bookmark->user->gambar) }}"
-                                            style="width: 50px; height: 50px; object-fit: cover; border-radius: 150px;"
-                                            alt="">
+                                        @if (isset($bookmark->user))
+                                            <img src="{{ Storage::url($bookmark->user->gambar) }}"
+                                                style="width: 50px; height: 50px; object-fit: cover; border-radius: 150px;"
+                                                alt="">
+                                        @endif
                                         <div>
                                             <h4>{{ $bookmark->post->user->username }}</h4>
                                             <span>{{ \Carbon\Carbon::parse($bookmark->created_at)->diffForHumans() }}</span>

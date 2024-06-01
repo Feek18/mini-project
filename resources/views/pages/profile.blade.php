@@ -77,7 +77,8 @@
             <div class="d-flex text-center flex-column">
                 <div class="container mt-5">
                     <div class="d-flex align-items-center" style="gap: 18px;">
-                        <img style="border-radius: 100px; width: 155px; height: 155px; object-fit: cover" src="{{ Storage::url($user->gambar) }}" alt="">
+                        <img style="border-radius: 100px; width: 155px; height: 155px; object-fit: cover"
+                            src="{{ Storage::url($user->gambar) }}" alt="">
                         <div class="profile-container text-white">
                             <div class="header">
                                 @if (Auth::user())
@@ -116,10 +117,13 @@
                                 </div>
                             </div>
                             <div class="d-flex" style="gap: 40px">
-                                <p>0 Followers</p>
-                                <p>0 Posts</p>
-                                <a class="text-decoration-none text-white" href="{{ route('following') }}">0
-                                    following</a>
+                                <p>0 posts</p>
+                                <p class="me-3"><a href="{{ route('see_followers', Auth::user()->id) }}"
+                                        class="text-decoration-none text-white">{{ Auth::user()->followers->count() }}
+                                        Followers</a></p>
+                                <p class="me-3"><a href="{{ route('see_followings', Auth::user()->id) }}"
+                                        class="text-decoration-none text-white">{{ Auth::user()->following->count() }}
+                                        Following</a></p>
                             </div>
                             <div class="d-flex flex-column" style="gap: 4px">
                                 <h5>{{ $user->nama }}</h5>
@@ -131,10 +135,12 @@
                 {{-- konten postingan --}}
                 <div class="post">
                     @foreach ($product as $data)
-                        @if ($data->user_id == auth()->id()) <!-- Memeriksa apakah pengguna saat ini adalah pemilik produk -->
+                        @if ($data->user_id == auth()->id())
+                            <!-- Memeriksa apakah pengguna saat ini adalah pemilik produk -->
                             <div class="card" style="width: 350px;">
                                 @if ($data->gambar)
-                                    <img style="object-fit: cover" src="{{ Storage::url($data->gambar) }}" width="350px" height="180px" alt="">
+                                    <img style="object-fit: cover" src="{{ Storage::url($data->gambar) }}"
+                                        width="350px" height="180px" alt="">
                                 @else
                                     <span>tidak ada gambar</span>
                                 @endif

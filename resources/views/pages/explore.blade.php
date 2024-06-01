@@ -14,6 +14,8 @@
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <style>
         * {
             box-sizing: border-box
@@ -117,7 +119,7 @@
             margin-top: 20px;
             flex-grow: 1;
         }
-        
+
         .input-group {
             width: auto;
         }
@@ -136,7 +138,7 @@
                 {{-- search content --}}
                 @include('layouts.searchcontent')
             </div>
-            
+
 
         </div>
     </section>
@@ -144,6 +146,39 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
+    <script>
+        $('.follow-btn').on('click', function(event) {
+            event.preventDefault();
+            let userId = $(this).data('user-id');
+            let button = $(this);
+
+            $.ajax({
+                url: '{{ route('follow.user') }}',
+                type: 'POST',
+                data: JSON.stringify({
+                    id_follow: userId
+                }),
+                contentType: 'application/json',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                success: function(data) {
+                    if (data.isFollowing) {
+                        button.text('Unfollow').addClass('bg-danger');
+                        button.removeClass('btn-primary').addClass('btn-danger');
+
+                    } else {
+                        button.text('Follow').addClass('bg-primary');;
+                        button.removeClass('btn-danger').addClass('btn-primary');
+                    }
+                    location.reload();
+                },
+                error: function(error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
     </script>
 </body>
 

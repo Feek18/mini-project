@@ -39,4 +39,48 @@ class followController extends Controller
 
         return view('../pages/following', compact('recommendations', 'posts'));
     }
+
+    public function followUser(Request $request)
+    {
+        $user_id = Auth::id();
+        $follow_id = $request->input('id_follow');
+
+        $isFollowing = Follower::where('user', $user_id)->where('id_follow', $follow_id)->exists();
+
+        if ($isFollowing) {
+            Follower::where('user', $user_id)
+                    ->where('id_follow', $follow_id)
+                    ->delete();
+        } else {
+            Follower::create([
+                'user' => $user_id,
+                'id_follow' => $follow_id
+            ]);
+        }
+
+        return response()->json(['isFollowing' => !$isFollowing]);
+    }
+
+    public function seeFollowings($id)
+    {
+        $user = User::findOrFail($id);
+        $followings = $user->following()->get();
+        return view('pages.following', compact('user', 'followings'));
+    }
+
+
+    public function seeFollowers($id)
+    {
+        $user = User::findOrFail($id);
+        $followers = $user->followers()->get();
+        return view('pages.follower', compact('user', 'followers'));
+    }
+
+    public function unfollow($id)
+    {
+        $user = Auth::user();
+        $user->following()->detach($id);
+
+        return response()->json(['success' => true]);
+    }
 }
